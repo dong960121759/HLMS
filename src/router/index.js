@@ -8,6 +8,9 @@ import Layout from '@/layout'
 
 /* Router Modules */
 import storageRouter from './modules/storage'
+import allotRouter from './modules/allot'
+import stocktakeRouter from './modules/stocktake'
+import recipientsRouter from './modules/recipients'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -102,6 +105,9 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   storageRouter,
+  allotRouter,
+  stocktakeRouter,
+  recipientsRouter,
   /** when your routing map is too long, you can split it into small modules **/
   {
     path: '/materials',
