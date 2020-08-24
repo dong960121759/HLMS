@@ -115,8 +115,7 @@ export default {
       loading: false,
       multipleSelection: [],
       switchRoles: 'in',
-      dateValue1: '',
-      downloadLoading: false
+      dateValue1: ''
     }
   },
   created() {
