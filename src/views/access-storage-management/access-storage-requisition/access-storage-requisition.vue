@@ -22,7 +22,13 @@
     </div>
     <DataTable ref="table" :config="config" />
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
-    <AccessDetailed v-if="isAccessDetailed" />
+    <el-dialog
+      title="出入库申请单详情"
+      :close-on-click-modal="false"
+      :visible.sync="isAccessDetailed"
+    >
+      <access-detailed v-if="isAccessDetailed" ref="accessDetailed" />
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -32,6 +38,7 @@ import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import DataTable from '../../../components/MyComponents/DataTable.vue'
 import AccessDetailed from './access-detailed.vue'
+
 export default {
   name: 'Child2',
   components: { Pagination, DataTable, AccessDetailed },
@@ -80,7 +87,7 @@ export default {
       multipleSelection: [],
       switchRoles: 'in',
       dateValue1: '',
-      isAccessDetailed: true
+      isAccessDetailed: false
     }
   },
   created() {
@@ -147,6 +154,10 @@ export default {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
         { label: '查看', click: data => {
           console.log(data)
+          this.isAccessDetailed = true
+          this.$nextTick(() => {
+            this.$refs.AccessDetailed.inits(data)
+          })
         } }
       ] }
     }

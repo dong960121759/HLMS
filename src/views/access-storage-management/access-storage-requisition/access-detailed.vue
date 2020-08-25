@@ -1,16 +1,11 @@
 <template>
-  <el-dialog
-    :title="出入库申请单详情"
-    :close-on-click-modal="false"
-    :visible.sync="visible"
-  >
-    <el-form ref="form" :model="form" label-width="600px">
-      <el-form-item label="名字" />
-      <el-input v-model="form.name" /> </el-form>
-  </el-dialog>
+
+  <el-form ref="form" :model="form" label-width="600px">
+    <el-form-item label="名字" />
+    <el-input v-model="form.name" /> </el-form>
+
 </template>
 <script>
-import { date } from 'jszip/lib/defaults'
 
 export default {
   name: 'AccessDetailed',
@@ -22,8 +17,11 @@ export default {
   },
   methods: {
     inits(data) {
-      this.form = date
+      this.form = data
       this.visible = true
+      this.$nextTick(() => {
+        console.log('111111111111111111' + data)
+      })
     }
   }
 }
