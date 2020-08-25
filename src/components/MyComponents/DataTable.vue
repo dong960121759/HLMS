@@ -1,7 +1,7 @@
 <template>
   <el-table :data="config.tableData" style="width: 100%" v-bind="cfg.attrs" v-on="cfg.on">
     <el-table-column v-if="cfg.hasCheckbox" type="selection" width="55" label="xx" />
-    <el-table-column v-for="n in cfg.headers" :key="n.prop" :prop="n.prop" :label="n.name" v-bind="{...columnAttrs, ...n.attrs}" align="center">
+    <el-table-column v-for="n in cfg.headers" :key="n.prop" :prop="n.prop" :label="n.name" v-bind="{...columnAttrs, ...n.attrs}">
       <template slot-scope="{row}">
         <Cell :config="n" :data="row" />
       </template>

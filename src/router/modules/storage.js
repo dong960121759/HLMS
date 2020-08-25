@@ -13,6 +13,12 @@ const storageRouter = {
   },
   children: [
     {
+      path: 'storage-entry',
+      component: () => import('@/views/storage/storage-entry/storage-entry'),
+      name: 'StorageEntry',
+      meta: { title: 'storageEntry' }
+    },
+    {
       path: 'requisition-management',
       component: () => import('@/views/storage/requisition-management'),
       name: 'RequisitionManagement',

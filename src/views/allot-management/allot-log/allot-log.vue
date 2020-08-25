@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
     <el-button v-if="excelExport" type="primary" @click="download">获取勾选的表格数据</el-button>
-    <DataTable ref="table" :config="config" @add="add" @edit="edit" />
+    <DataTable ref="table" :config="config" />
   </div>
 </template>
 
 <script>
-import DataTable from '../../components/MyComponents/DataTable.vue'
+import DataTable from '../../../components/MyComponents/DataTable.vue'
 export default {
   components: {
     DataTable
@@ -15,11 +15,11 @@ export default {
     return {
       config: {
         headers: [
-          { prop: 'contractCode', name: '调拨申请单号', attrs: { width: 200 }},
-          { prop: 'status', name: '状态', type: 'Enum', Enum: { name: 'order' }, attrs: { align: 'left' }},
+          { prop: 'contractCode', name: '调拨申请单号', attrs: { width: 200, align: 'center' }},
+          { prop: 'status', name: '状态', type: 'Enum', Enum: { name: 'order' }, attrs: { align: 'center' }},
           { prop: 'payeeAcctName', name: '调出仓库', attrs: { align: 'center' }},
           { prop: 'tradeAmt', name: '调入仓库', attrs: { align: 'center' }},
-          { prop: 'reason', name: '申请人', attrs: { align: 'center' }},
+          { prop: 'reason', name: '申请人', type: 'Popover', attrs: { align: 'center' }},
           { prop: 'payTime', name: '申请时间', type: 'Date', attrs: { align: 'center' }}
         ].concat(this.getActions()),
         tableData: [
@@ -71,12 +71,6 @@ export default {
     },
     download() {
       console.log(this.$refs.table.getChecked())
-    },
-    add(e) {
-      console.log('新增：' + this.$refs.table.getChecked())
-    },
-    edit(e) {
-      console.log('编辑：' + e.contractCode)
     }
   }
 }

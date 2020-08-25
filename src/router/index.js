@@ -11,6 +11,7 @@ import storageRouter from './modules/storage'
 import allotRouter from './modules/allot'
 import stocktakeRouter from './modules/stocktake'
 import recipientsRouter from './modules/recipients'
+import accessStorageRouter from './modules/access-storage'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -105,6 +106,7 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   storageRouter,
+  accessStorageRouter,
   allotRouter,
   stocktakeRouter,
   recipientsRouter,
