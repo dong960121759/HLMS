@@ -1,4 +1,4 @@
-/** When your routing allot-management is too long, you can split it into small modules **/
+/** 调拨管理 When your routing allot-management is too long, you can split it into small modules **/
 
 import Layout from '@/layout'
 
@@ -9,7 +9,7 @@ const allotRouter = {
   name: 'AllotManagement',
   meta: {
     title: 'AllotManagement',
-    icon: 'table'
+    icon: 'el-icon-s-claim'
   },
   children: [
     {

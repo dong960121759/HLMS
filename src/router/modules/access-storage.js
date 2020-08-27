@@ -1,4 +1,4 @@
-/** When your routing recipients-management is too long, you can split it into small modules **/
+/** 出入库管理When your routing recipients-management is too long, you can split it into small modules **/
 
 import Layout from '@/layout'
 
@@ -9,7 +9,7 @@ const accessStorageRouter = {
   name: 'AccessStorageManagement',
   meta: {
     title: 'AccessStorageManagement',
-    icon: 'table'
+    icon: 'el-icon-s-fold'
   },
   children: [
     {

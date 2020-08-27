@@ -9,7 +9,7 @@ const storageRouter = {
   name: 'Storage',
   meta: {
     title: 'Storage',
-    icon: 'table'
+    icon: 'el-icon-s-home'
   },
   children: [
     {

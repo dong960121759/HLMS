@@ -1,47 +1,56 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      <el-input v-model="listQuery.title" :placeholder="$t('table.title')" style="width: 300px; margin-right:20px; " class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-date-picker
-        v-model="dateValue1"
-        type="daterange"
-        style="margin-right:20px; "
-        unlink-panels
-        class="filter-item"
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        :change="selectdate"
-      />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+    <div class="filter-container" style="padding-bottom: 10px;">
+      <el-input v-model="listQuery.title" :placeholder="$t('table.title')" style="width: 300px; margin-right:20px; margin-bottom: 0px; " class="filter-item" @keyup.enter.native="handleFilter" />
+
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" style="margin-bottom: 0px; " @click="handleFilter">
         {{ $t('table.search') }}
       </el-button>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="handleDownload">
-        新建调拨申请
+      <el-select v-model="citys" multiple placeholder="出入库类型" style="margin-left:30px; width: 300px; " :change="selected(citys)">
+        <el-option
+          v-for="item in cities"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" style="margin-bottom: 0px; margin-left:30px;" @click="handleDownload">
+        申请入库
       </el-button>
     </div>
     <DataTable ref="table" :config="config" />
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+
     <el-dialog
       title="出入库申请单详情"
+      width="80%"
+      center
       :close-on-click-modal="false"
       :visible.sync="isAccessDetailed"
     >
       <access-detailed v-if="isAccessDetailed" ref="accessDetailed" />
     </el-dialog>
+    <el-dialog
+      title="入库申请单"
+      width="80%"
+      center
+      :close-on-click-modal="false"
+      :visible.sync="isInStorage"
+    >
+      <in-storage v-if="isInStorage" ref="inStorage" />
+    </el-dialog>
   </div>
 </template>
 <script>
-import { fetchList } from '@/api/article'
+import { fetchAccessStorageRequisition } from '@/api/article'
 import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import DataTable from '../../../components/MyComponents/DataTable.vue'
 import AccessDetailed from './access-detailed.vue'
-
+import InStorage from './in-storage.vue'
 export default {
-  name: 'Child2',
-  components: { Pagination, DataTable, AccessDetailed },
+  name: 'AccessStorageRequisition',
+  components: { Pagination, DataTable, AccessDetailed, InStorage },
   directives: { waves },
   filters: {
     statusFilter(status) {
@@ -87,7 +96,14 @@ export default {
       multipleSelection: [],
       switchRoles: 'in',
       dateValue1: '',
-      isAccessDetailed: false
+      isAccessDetailed: false,
+      isInStorage: false,
+      citys: [],
+      cities: [
+        { value: '0', label: '调拨入库' },
+        { value: '1', label: '调拨出库' },
+        { value: '2', label: '科室领用' }
+      ]
     }
   },
   created() {
@@ -98,7 +114,7 @@ export default {
     getList() {
       this.loading = true
       this.$emit('create') // for test
-      fetchList(this.listQuery).then(response => {
+      fetchAccessStorageRequisition(this.listQuery).then(response => {
         this.config.tableData = response.data.items
         console.log('response.data.items')
         this.total = response.data.total
@@ -132,16 +148,7 @@ export default {
     handleUpdate(row) {
     },
     handleDownload() {
-      console.log('This is ....' + this.dateValue1)
-    },
-    formatJson(filterVal) {
-      return this.list.map(v => filterVal.map(j => {
-        if (j === 'timestamp') {
-          return parseTime(v[j])
-        } else {
-          return v[j]
-        }
-      }))
+      this.isInStorage = true
     },
     getSortClass: function(key) {
       const sort = this.listQuery.sort
@@ -155,11 +162,11 @@ export default {
         { label: '查看', click: data => {
           console.log(data)
           this.isAccessDetailed = true
-          this.$nextTick(() => {
-            this.$refs.AccessDetailed.inits(data)
-          })
         } }
       ] }
+    },
+    selected(citys) {
+      console.log('This is ....' + citys)
     }
   }
 }
@@ -167,4 +174,10 @@ export default {
 <style>
 .action span{margin-right:10px;color:#359C67;cursor: pointer;}
 .action {text-align: center;}
+.filter-item1{
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-right:20px;
+}
+
 </style>

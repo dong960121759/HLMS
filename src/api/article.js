@@ -39,3 +39,11 @@ export function updateArticle(data) {
     data
   })
 }
+// 出入库申请列表
+export function fetchAccessStorageRequisition(query) {
+  return request({
+    url: '/vue-element-admin/article/list',
+    method: 'get',
+    params: query
+  })
+}

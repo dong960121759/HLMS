@@ -1,4 +1,4 @@
-/** When your routing stocktake-management is too long, you can split it into small modules **/
+/** 盘点管理When your routing stocktake-management is too long, you can split it into small modules **/
 
 import Layout from '@/layout'
 

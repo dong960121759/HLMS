@@ -9,7 +9,7 @@ const recipientsRouter = {
   name: 'RecipientsManagement',
   meta: {
     title: 'RecipientsManagement',
-    icon: 'table'
+    icon: 'el-icon-s-order'
   },
   children: [
     {
