@@ -22,25 +22,38 @@
         <el-form-item label="申请科室：" prop="name">
           <el-input v-model="ruleForm.name" style="width: 100px" />
         </el-form-item>
-      </el-form>
-    </div>
-    <el-divider style="margin: 10px 0;" />
-    <div class="filter-container" style="padding-top: 0px;">
-      <el-input v-model="materialCode" size="mini" placeholder="输入物资代码" style="width: 300px; margin-right:20px; margin-bottom: 0px; " class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-button v-waves class="filter-item" size="mini" type="primary" icon="el-icon-search" style="margin-bottom: 0px; " @click="handleFilter">
-        {{ $t('table.search') }}
-      </el-button>
-      <el-button v-waves class="filter-item" size="mini" type="danger" icon="el-icon-delete" style="margin-bottom: 0px; " @click="deleteSelect">
-        删除所选
-      </el-button>
-    </div>
-    <div class="filter-container" style="padding-top: 0px;">
-      <DataTable ref="table" :config="config" />
 
-      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" aria-setsize="mini" @pagination="getList" />
-    </div>
-    <el-divider style="margin: 10px 0;" />
+        <el-divider style="margin: 10px 0;" />
+        <div class="filter-container" style="padding-top: 0px;">
+          <el-input v-model="materialCode" size="mini" placeholder="输入物资代码" style="width: 300px; margin-right:20px; margin-bottom: 0px; " class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-button v-waves class="filter-item" size="mini" type="primary" icon="el-icon-search" style="margin-bottom: 0px; " @click="handleFilter">
+            {{ $t('table.search') }}
+          </el-button>
+          <el-button v-waves class="filter-item" size="mini" type="danger" icon="el-icon-delete" style="margin-bottom: 0px; " @click="deleteSelect">
+            删除所选
+          </el-button>
+        </div>
+        <div class="filter-container" style="padding-top: 0px;">
+          <DataTable ref="table" :config="config" />
 
+          <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" aria-setsize="mini" @pagination="getList" />
+        </div>
+        <el-divider style="margin: 10px 0;" />
+        <el-form-item label="备注：">
+          <div class="filter-container" style="padding-top: 0px;">
+            <el-input
+              v-model="remarks"
+              type="textarea"
+              maxlength="100"
+              show-word-limit
+              size="medium"
+              style="width: 600px;"
+              :autosize="{ minRows: 2, maxRows: 5}"
+              placeholder="请输入内容"
+            />
+          </div>
+        </el-form-item>
+      </el-form></div>
   </div>
 </template>
 <script>
@@ -102,7 +115,8 @@ export default {
       }],
       value: '',
       inStorage: [],
-      materialCode: ''
+      materialCode: '',
+      remarks: ''
     }
   },
   created() {
@@ -176,5 +190,9 @@ export default {
     position: relative;
     font-size: 14px;
     margin-left: 10px;
+}
+.pagination-container[data-v-72233bcd] {
+    background: #fff;
+    padding: 32px 32px 0px 16px;
 }
 </style>
