@@ -18,7 +18,7 @@
         申请入库
       </el-button>
     </div>
-    <DataTable ref="table" :config="config" />
+    <DataTable ref="table" :config="config" @tableDbEdit="tableDbEdit" />
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog
@@ -167,13 +167,16 @@ export default {
     },
     selected(citys) {
       console.log('This is ....' + citys)
+    },
+    tableDbEdit(e) {
+      console.log('aaaaaaaaaaaaaaaaaaaa')
+      this.isAccessDetailed = true
     }
   }
 }
 </script>
 <style>
-.action span{margin-right:10px;color:#359C67;cursor: pointer;}
-.action {text-align: center;}
+
 .filter-item1{
   display: inline-block;
   margin-bottom: 10px;

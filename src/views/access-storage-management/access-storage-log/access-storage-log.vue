@@ -15,25 +15,10 @@
         <el-divider style="margin: 10px 0;" />
       </div>
       <div class="filter-container" style="padding-top: 0px;">
-        <DataTable ref="table" :config="config" />
+        <DataTable ref="table" :config="config" @tableDbEdit="tableDbEdit" />
 
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" aria-setsize="mini" @pagination="getList" />
       </div>
-      <el-divider style="margin: 10px 0;" />
-      <el-form-item label="备注：">
-        <div class="filter-container" style="padding-top: 0px;">
-          <el-input
-            v-model="remarks"
-            type="textarea"
-            maxlength="100"
-            show-word-limit
-            size="medium"
-            style="width: 600px;"
-            :autosize="{ minRows: 2, maxRows: 5}"
-            placeholder="请输入内容"
-          />
-        </div>
-      </el-form-item>
     </div>
   </div></template>
 <script>
@@ -43,7 +28,7 @@ import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
-  name: 'InStorage',
+  name: 'AccessStorageLog',
   components: { DataTable, Pagination },
   directives: { waves },
   data() {
@@ -58,22 +43,13 @@ export default {
         resource: '',
         desc: ''
       },
-      rules: {
-        name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-        ],
-        region: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
-        ]
-      },
       config: {
         headers: [
           { prop: 'id', name: '物资名称', attrs: { width: 200, align: 'center' }},
           { prop: 'status', name: '物资代码', type: 'Enum', Enum: { name: 'order' }, attrs: { align: 'center' }},
           { prop: 'author', name: '规格', attrs: { align: 'center' }},
           { prop: 'title', name: '实际数量', type: 'Popover', attrs: { align: 'center' }}
-        ],
+        ].concat(this.getActions()),
         tableData: [],
         hasCheckbox: true
       },
@@ -148,6 +124,36 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
+    },
+    tableDbEdit(e) {
+      console.log('aaaaaaaaaaaaaaaaaaaa')
+    },
+    getActions() {
+      return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
+        { label: '查看', click: data => {
+          console.log(data)
+          this.isAccessDetailed = true
+        }
+        },
+        { label: '删除', click: data => {
+          this.$confirm('此操作将删除所选, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            console.log(this.$refs.table.getChecked())
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
+        } }
+      ] }
     }
   }
 }
