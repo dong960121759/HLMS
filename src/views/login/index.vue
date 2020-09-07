@@ -47,20 +47,6 @@
           </span>
         </el-form-item>
       </el-tooltip>
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.deptID"
-          :placeholder="$t('login.dept')"
-          name="deptID"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-        />
-      </el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
