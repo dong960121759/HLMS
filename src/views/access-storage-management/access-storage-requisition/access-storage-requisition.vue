@@ -124,38 +124,12 @@ export default {
         }, 1.5 * 1000)
       })
     },
-    handleSelectionChange(val) {
-      this.multipleSelection = val
-    },
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
     },
-    sortChange(data) {
-      const { prop, order } = data
-      if (prop === 'id') {
-        this.sortByID(order)
-      }
-    },
-    sortByID(order) {
-      if (order === 'ascending') {
-        this.listQuery.sort = '+id'
-      } else {
-        this.listQuery.sort = '-id'
-      }
-      this.handleFilter()
-    },
-    handleUpdate(row) {
-    },
     handleDownload() {
       this.isInStorage = true
-    },
-    getSortClass: function(key) {
-      const sort = this.listQuery.sort
-      return sort === `+${key}` ? 'ascending' : 'descending'
-    },
-    selectdate() {
-      console.log('This is ....')
     },
     getActions() {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [

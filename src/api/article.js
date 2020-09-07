@@ -47,3 +47,21 @@ export function fetchAccessStorageRequisition(query) {
     params: query
   })
 }
+
+// 库存列表
+export function fetchStorageEntry(query) {
+  return request({
+    url: '/vue-element-admin/article/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 库存列表
+export function deleteAccessDetailed(selected) {
+  return request({
+    url: '/vue-element-admin/article/list',
+    method: 'get',
+    params: selected
+  })
+}

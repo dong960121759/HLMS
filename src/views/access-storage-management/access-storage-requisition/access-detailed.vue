@@ -44,7 +44,7 @@
   </div>
 </template>
 <script>
-import { fetchAccessStorageRequisition } from '@/api/article'
+import { fetchAccessStorageRequisition, deleteAccessDetailed } from '@/api/article'
 import DataTable from '../../../components/MyComponents/DataTable.vue'
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -123,15 +123,26 @@ export default {
     handleFilter() {
 
     },
-    deleteSelect() {
+    deleteSelect(selected) {
       this.$confirm('此操作将删除所选, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+        this.loading = true
+        this.$emit('create') // for test
+        deleteAccessDetailed(selected).then(response => {
+          this.config.tableData = response.data.items
+          console.log('response.data.items')
+          this.total = response.data.total
+          this.loading = false
+          setTimeout(() => {
+            this.listLoading = false
+          }, 1.5 * 1000)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
         })
       }).catch(() => {
         this.$message({
