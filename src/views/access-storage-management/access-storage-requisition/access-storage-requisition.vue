@@ -45,7 +45,7 @@
 import { fetchAccessStorageRequisition } from '@/api/article'
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import DataTable from '../../../components/MyComponents/DataTable.vue'
+import DataTable from '@/components/MyComponents/DataTable.vue'
 import AccessDetailed from './access-detailed.vue'
 import InStorage from './in-storage.vue'
 export default {
@@ -133,7 +133,7 @@ export default {
     },
     getActions() {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
-        { label: '查看', click: data => {
+        { id: '1', label: '查看', click: data => {
           console.log(data)
           this.isAccessDetailed = true
         } }
@@ -150,7 +150,7 @@ export default {
 }
 </script>
 <style>
-
+ @import "../../../styles/tablebtn.scss";
 .filter-item1{
   display: inline-block;
   margin-bottom: 10px;

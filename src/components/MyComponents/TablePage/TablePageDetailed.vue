@@ -16,57 +16,41 @@
         <el-form-item label="申请单号：" prop="name">
           <el-input v-model="ruleForm.name" style="width: 150px" />
         </el-form-item>
-        <el-form-item label="申请人：" prop="region">
-          <el-input v-model="ruleForm.region" style="width: 100px" />
+        <el-form-item label="申请人：" prop="name">
+          <el-input v-model="ruleForm.name" style="width: 100px" />
         </el-form-item>
-        <el-form-item label="申请科室：" prop="date1">
-          <el-input v-model="ruleForm.date1" style="width: 100px" />
+        <el-form-item label="申请科室：" prop="name">
+          <el-input v-model="ruleForm.name" style="width: 100px" />
         </el-form-item>
+      </el-form>
 
-        <el-divider style="margin: 10px 0;" />
-        <div class="filter-container" style="padding-top: 0px;">
-          <el-input v-model="materialCode" size="mini" placeholder="输入物资代码" style="width: 300px; margin-right:20px; margin-bottom: 0px; " class="filter-item" @keyup.enter.native="handleFilter" />
-          <el-button v-waves class="filter-item" size="mini" type="primary" icon="el-icon-search" style="margin-bottom: 0px; " @click="handleFilter">
-            {{ $t('table.search') }}
-          </el-button>
-          <el-button v-waves class="filter-item" size="mini" type="danger" icon="el-icon-delete" style="margin-bottom: 0px; " @click="deleteSelect">
-            删除所选
-          </el-button>
-          <el-form-item style=" margin-left:200px;">
-            <el-button type="success" @click="submitForm('ruleForm')">提交</el-button>
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
-          </el-form-item>
-        </div>
-        <div class="filter-container" style="padding-top: 0px;">
-          <DataTable ref="table" :config="config" />
+    </div>
+    <el-divider style="margin: 10px 0;" />
+    <div class="filter-container" style="padding-top: 0px;">
+      <el-input v-model="materialCode" size="mini" placeholder="输入物资代码" style="width: 300px; margin-right:20px; margin-bottom: 0px; " class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-button v-waves class="filter-item" size="mini" type="primary" icon="el-icon-search" style="margin-bottom: 0px; " @click="handleFilter">
+        {{ $t('table.search') }}
+      </el-button>
+      <el-button v-waves class="filter-item" size="mini" type="danger" icon="el-icon-delete" style="margin-bottom: 0px; " @click="deleteSelect">
+        删除所选
+      </el-button>
+    </div>
+    <div class="filter-container" style="padding-top: 0px;">
+      <DataTable ref="table" :config="config" />
 
-          <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" aria-setsize="mini" @pagination="getList" />
-        </div>
-        <el-divider style="margin: 10px 0;" />
-        <el-form-item label="备注：">
-          <div class="filter-container" style="padding-top: 0px;">
-            <el-input
-              v-model="remarks"
-              type="textarea"
-              maxlength="100"
-              show-word-limit
-              size="medium"
-              style="width: 600px;"
-              :autosize="{ minRows: 2, maxRows: 5}"
-              placeholder="请输入内容"
-            />
-          </div>
-        </el-form-item>
-      </el-form></div>
+      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" aria-setsize="mini" @pagination="getList" />
+    </div>
+    <el-divider style="margin: 10px 0;" />
+
   </div>
 </template>
 <script>
-import { fetchAccessStorageRequisition } from '@/api/article'
-import DataTable from '@/components/MyComponents/DataTable.vue'
+import { fetchAccessStorageRequisition, deleteAccessDetailed } from '@/api/article'
+import DataTable from '../../../components/MyComponents/DataTable.vue'
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 export default {
-  name: 'InStorage',
+  name: 'AccessDetailed',
   components: { DataTable, Pagination },
   directives: { waves },
   data() {
@@ -119,8 +103,7 @@ export default {
       }],
       value: '',
       inStorage: [],
-      materialCode: '',
-      remarks: ''
+      materialCode: ''
     }
   },
   created() {
@@ -141,15 +124,26 @@ export default {
     handleFilter() {
 
     },
-    deleteSelect() {
+    deleteSelect(selected) {
       this.$confirm('此操作将删除所选, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+        this.loading = true
+        this.$emit('create') // for test
+        deleteAccessDetailed(selected).then(response => {
+          this.config.tableData = response.data.items
+          console.log('response.data.items')
+          this.total = response.data.total
+          this.loading = false
+          setTimeout(() => {
+            this.listLoading = false
+          }, 1.5 * 1000)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
         })
       }).catch(() => {
         this.$message({
@@ -170,20 +164,6 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
-    },
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
-      this.config.tableData = []
     }
   }
 }
@@ -209,8 +189,5 @@ export default {
     font-size: 14px;
     margin-left: 10px;
 }
-.pagination-container[data-v-72233bcd] {
-    background: #fff;
-    padding: 32px 32px 0px 16px;
-}
 </style>
+

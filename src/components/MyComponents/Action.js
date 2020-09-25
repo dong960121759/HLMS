@@ -4,7 +4,7 @@ const getAcitons = (h, value, data) => {
     return filter.call(n, data)
   })
 
-  return result.map(a => h('el-button', { class: 'btn', on: { click: () => a.click(data) }, key: a.prop }, a.label))
+  return result.map(a => h('el-button', { class: 'btn' + a.id, on: { click: () => a.click(data) }, key: a.prop }, a.label))
 }
 
 export default {

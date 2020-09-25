@@ -57,8 +57,25 @@ export function fetchStorageEntry(query) {
   })
 }
 
-// 库存列表
+// 删除出入库存列表
 export function deleteAccessDetailed(selected) {
+  return request({
+    url: '/vue-element-admin/article/list',
+    method: 'get',
+    params: selected
+  })
+}
+
+// 查询领用日志
+export function fetchRecipientsLog(query) {
+  return request({
+    url: '/vue-element-admin/article/list',
+    method: 'get',
+    params: query
+  })
+}
+// 删除所选领用日志
+export function deleteRecipientsLog(selected) {
   return request({
     url: '/vue-element-admin/article/list',
     method: 'get',
