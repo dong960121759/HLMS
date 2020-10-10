@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="">
     <div class="filter-container" style="padding-bottom: 10px;">
       <el-row :gutter="20">
         <el-col :span="6"> <el-input v-model="listQuery.oid" size="mini" placeholder="输入代码" style="width: 300px; margin-right:20px; margin-bottom: 0px; " class="filter-item" @keyup.enter.native="handleFilter" /></el-col>
@@ -21,42 +21,22 @@
           删除所选
         </el-button></el-col>
         <el-col :span="2"> <el-button v-if="isLog" v-waves class="filter-item" size="mini" type="primary" icon="el-icon-plus" style="margin-bottom: 0px; margin-left:30px;" @click="handleDownload">
-          申请入库
+          {{ pageConfig.optionName }}
         </el-button></el-col>
       </el-row>
     </div>
     <DataTable ref="table" :config="config" @tableDbEdit="tableDbEdit" />
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
-
-    <el-dialog
-      title="领用申请单详情"
-      width="80%"
-      center
-      :close-on-click-modal="false"
-      :visible.sync="pageConfig.isAccessDetailed"
-    >
-      <TablePageDetailed v-if="pageConfig.isAccessDetailed" ref="tablePageDetailed" />
-    </el-dialog>
-    <el-dialog
-      title="入库申请单"
-      width="80%"
-      center
-      :close-on-click-modal="false"
-      :visible.sync="isInStorage"
-    >
-      <in-storage v-if="isInStorage" ref="inStorage" />
-    </el-dialog>
   </div>
 </template>
 <script>
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import DataTable from '../DataTable.vue'
-import TablePageDetailed from './TablePageDetailed1.vue'
 
 export default {
   name: 'TablePage',
-  components: { Pagination, DataTable, TablePageDetailed },
+  components: { Pagination, DataTable },
   directives: { waves },
   filters: {
   },
@@ -79,7 +59,6 @@ export default {
       listQuery: this.pageConfig.listQuery,
       dateValue1: this.pageConfig.dateValue1,
       materialCode: '',
-      isInStorage: this.pageConfig.isInStorage,
       isLog: this.pageConfig.isLog
     }
   },
@@ -95,13 +74,13 @@ export default {
       this.getList()
     },
     handleDownload() {
-      this.isInStorage = true
+      this.$parent.isInStorage = true
     },
     getActions() {
       this.$parent.getActions()
     },
     tableDbEdit(e) {
-      this.pageConfig.isAccessDetailed = true
+      this.$parent.isAccessDetailed = true
     },
     deleteSelect() {
       if (this.$refs.table.getChecked().length === 0) {

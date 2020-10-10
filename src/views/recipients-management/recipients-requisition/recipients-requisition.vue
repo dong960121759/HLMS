@@ -1,13 +1,34 @@
 <template>
-  <TablePage :page-config="pageConfig" :config="config" />
+  <div class="app-container">
+    <TablePage :page-config="pageConfig" :config="config" />
+    <el-dialog
+      title="领用申请单详情"
+      width="80%"
+      center
+      :close-on-click-modal="false"
+      :visible.sync="isAccessDetailed"
+    >
+      <TablePageDetailed v-if="isAccessDetailed" ref="tablePageDetailed" :oid="oid" />
+    </el-dialog>
+    <el-dialog
+      title="新建领用申请单"
+      width="80%"
+      center
+      :close-on-click-modal="false"
+      :visible.sync="isInStorage"
+    >
+      <in-storage v-if="isInStorage" ref="inStorage" />
+    </el-dialog>
+  </div>
 </template>
 <script>
-import { fetchRecipientsLog, deleteRecipientsLog } from '@/api/article'
-import TablePage from '@/components/MyComponents/TablePage/index.vue'
+import { fetchRecipientsRequisition, deleteRecipientsRequisition } from '@/api/article'
+import TablePage from '@/components/MyComponents/TablePage'
+import TablePageDetailed from './recipient-requistion-detailed.vue'
 
 export default {
   name: '',
-  components: { TablePage },
+  components: { TablePage, TablePageDetailed },
   data() {
     return {
       config: {
@@ -32,11 +53,12 @@ export default {
           dateValue: undefined
         },
         dateValue1: '',
-        isAccessDetailed: false,
-        isInStorage: false,
-        isLog: true
-      }
-
+        isLog: true,
+        optionName: '新建领用申请'
+      },
+      isInStorage: false,
+      isAccessDetailed: false,
+      oid: 0
     }
   },
   created() {
@@ -44,7 +66,7 @@ export default {
 
   methods: {
     getListFat(listQuery) {
-      fetchRecipientsLog(listQuery).then(response => {
+      fetchRecipientsRequisition(listQuery).then(response => {
         this.config.tableData = response.data.items
         console.log('response.data.items')
         this.pageConfig.total = response.data.total
@@ -60,14 +82,14 @@ export default {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
         { id: '1', label: '查看', click: data => {
           console.log(data)
-          this.pageConfig.isAccessDetailed = true
-          console.log(this.pageConfig.isAccessDetailed)
+          this.isAccessDetailed = true
         } }
       ] }
     },
+    // 删除所选
     deleteSelect(e) {
       console.log(e)
-      deleteRecipientsLog(e).then(response => {
+      deleteRecipientsRequisition(e).then(response => {
         this.config.tableData = response.data.items
         console.log('response.data.items')
         this.pageConfig.total = response.data.total

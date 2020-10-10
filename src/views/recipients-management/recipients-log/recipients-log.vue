@@ -1,5 +1,7 @@
 <template>
-  <TablePage :page-config="pageConfig" :config="config" />
+  <div class="app-container">
+    <TablePage :page-config="pageConfig" :config="config" />
+  </div>
 </template>
 <script>
 import { fetchRecipientsLog, deleteRecipientsLog } from '@/api/article'
@@ -32,10 +34,11 @@ export default {
           dateValue: undefined
         },
         dateValue1: '',
-        isAccessDetailed: false,
         isInStorage: false,
-        isLog: false
-      }
+        isLog: false,
+        optionName: '新建领用申请'
+      },
+      isAccessDetailed: false
 
     }
   },
@@ -60,7 +63,7 @@ export default {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
         { id: '1', label: '查看', click: data => {
           console.log(data)
-          this.pageConfig.isAccessDetailed = true
+          this.isAccessDetailed = true
           console.log(this.pageConfig.isAccessDetailed)
         } }
       ] }

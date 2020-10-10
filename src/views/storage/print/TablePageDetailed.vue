@@ -10,7 +10,7 @@
 
 </template>
 <script>
-import EditForm from '../EditForm/EditForm'
+import EditForm from '@/components/MyComponents/EditForm/EditForm'
 
 const statusLlist = [
   { label: '未提交', value: '0' },
@@ -48,7 +48,7 @@ export default {
       config: {
         columns: [
           { prop: 'name', label: '借款名称', is: 'auto', fetchSuggestions: this.querySearch },
-          { prop: 'certificateId', label: '代码', rules: [{ required: true, message: '请输入统一信用代码' }] },
+          { prop: 'certificateId', label: '代码', rules: [{ required: true, message: '请输入统一信用代码' }], border: 0 },
           { prop: 'daterange', label: '日期范围', is: 'daterange' },
           { prop: 'date', label: '日期', is: 'date' },
           { prop: 'status', label: '状态', is: 'select', list: statusLlist, callback: r => this.statusChange(r) },
@@ -62,12 +62,21 @@ export default {
           { prop: 'delivery', label: '即时配送', is: 'switch' }
         ],
         data: {
-          name: '小坏',
+          name: '东',
           certificateId: '222',
-          status: '0',
-          love: ['0']
+          daterange: null,
+          date: null,
+          status: null,
+          password: null,
+          confimPass: null,
+          remark: null,
+          email: null,
+          remember: null,
+          gender: null,
+          love: ['0'],
+          delivery: true
         },
-        rowSize: 3 // 一行可以展示几列表单，默认为3列
+        rowSize: 1 // 一行可以展示几列表单，默认为3列
       }
     }
   },
@@ -111,5 +120,11 @@ export default {
 }
 .content li {
   padding: 10px 0;
+}
+.el-input__inner {
+   border: 0px;
+}
+.el-textarea__inner {
+   border: 0px;
 }
 </style>

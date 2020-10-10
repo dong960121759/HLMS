@@ -1,21 +1,21 @@
 <template>
-  <el-form ref="form" :model="form" :rules="rules" size="small" :label-position="'top'">
+  <el-form ref="form" :model="form" :rules="rules" size="mini" :label-position="'right'" label-width="30%">
     <el-row v-for="(row, i) in columns" :key="i" :gutter="20">
       <el-col v-for="(x, idx) in row" :key="idx" :span="24 / rowSize">
-        <el-form-item :label="x.label" :prop="x.prop">
-          <components :is="x['is']" v-model.trim="form[x.prop]" v-bind="componentAttrs(x)" class="width-full" />
+        <el-form-item :label="x.label+':'" :prop="x.prop">
+          <component :is="x['is']" v-model.trim="form[x.prop]" v-bind="componentAttrs(x)" class="width-full" />
         </el-form-item>
       </el-col>
     </el-row>
     <div v-if="footer" class="searchBtn">
-      <el-button class="filter-item" @click="reset">重置</el-button>
-      <el-button class="filter-item" type="primary" @click="submit">查询</el-button>
+      <el-button class="filter-item" size="mini" @click="reset">重置</el-button>
+      <el-button class="filter-item" size="mini" type="primary" @click="submit">查询</el-button>
     </div>
   </el-form>
 </template>
 
 <script>
-import { chunk } from './util'
+import { chunk, fromEntries } from './util'
 // import { fromEntries } from './fromEntries'
 export default {
   components: {
@@ -103,7 +103,7 @@ export default {
           is: 'el-autocomplete'
         }
       },
-      form: columns.reduce((r, c) => Object.assign(r, { [c.prop]: c.is === 'checkboxGroup' ? [] : null }), {}),
+      // form: columns.reduce((r, c) => Object.assign(r, { [c.prop]: c.is === 'checkboxGroup' ? [] : null }), {}),
       rules: columns.reduce((r, c) => ({ ...r, [c.prop]: c.rules ? c.rules : [] }), {}),
       columns: chunk(columns, rowSize),
       rowSize
@@ -111,6 +111,10 @@ export default {
   },
   computed: {
     // 注意form放在了这里
+    form() {
+      const { data } = this.config
+      return data
+    },
     footer() {
       const { footer = true } = this.config
       return footer
@@ -121,7 +125,8 @@ export default {
   },
   methods: {
     componentAttrs(item) {
-      const { is = 'text', label } = item; const attrs = Object.fromEntries(Object.entries(item).filter(n => !/^(prop|is|rules)/.test(n[0])))
+      const { is = 'text', label } = item
+      const attrs = fromEntries(Object.entries(item).filter(n => !/^(prop|is|rules)/.test(n[0])))
       const placeholder = (/^(select|el-date-picker)/.test(is) ? '选择' : '输入/搜索') + label
       return { ...attrs, ...this.TYPE[is], placeholder }
     },
@@ -145,5 +150,8 @@ export default {
 </script>
 
 <style scoped>
-.width-full{width: 100%;}
+.width-full{
+  width: 80%;
+  border: 0px;
+}
 </style>

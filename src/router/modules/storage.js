@@ -13,6 +13,12 @@ const storageRouter = {
   },
   children: [
     {
+      path: 'print',
+      component: () => import('@/views/storage/print/TablePageDetailed'),
+      name: 'print',
+      meta: { title: 'print' }
+    },
+    {
       path: 'storage-entry',
       component: () => import('@/views/storage/storage-entry/storage-entry'),
       name: 'StorageEntry',

@@ -20,7 +20,8 @@
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" aria-setsize="mini" @pagination="getList" />
       </div>
     </div>
-  </div></template>
+  </div>
+</template>
 <script>
 import { fetchAccessStorageRequisition } from '@/api/article'
 import DataTable from '@/components/MyComponents/DataTable.vue'

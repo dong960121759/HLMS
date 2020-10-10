@@ -82,3 +82,20 @@ export function deleteRecipientsLog(selected) {
     params: selected
   })
 }
+// 查询领用申请
+export function fetchRecipientsRequisition(query) {
+  return request({
+    url: '/vue-element-admin/article/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 删除所选领用申请
+export function deleteRecipientsRequisition(selected) {
+  return request({
+    url: '/vue-element-admin/article/list',
+    method: 'get',
+    params: selected
+  })
+}
