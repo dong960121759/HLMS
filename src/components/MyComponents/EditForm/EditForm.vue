@@ -101,6 +101,11 @@ export default {
         },
         auto: {
           is: 'el-autocomplete'
+        },
+        image: {
+          is: 'svg',
+          id: 'barcode',
+          clearable: true
         }
       },
       // form: columns.reduce((r, c) => Object.assign(r, { [c.prop]: c.is === 'checkboxGroup' ? [] : null }), {}),

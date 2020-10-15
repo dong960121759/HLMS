@@ -3,7 +3,6 @@
     <div id="printMe" ref="printContent">
       <EditForm ref="form" :config="config" @submit="getList" />
     </div>
-    <el-button type="primary" @click="toImg">转图片打印</el-button>
     <el-button v-print="printObj" type="primary">直接打印</el-button>
     <img style="margin-top:20px;" :src="img" alt="">
   </div>
@@ -11,7 +10,7 @@
 </template>
 <script>
 import EditForm from '@/components/MyComponents/EditForm/EditForm'
-
+import JsBarcode from 'jsbarcode'
 const statusLlist = [
   { label: '未提交', value: '0' },
   { label: '待审批', value: '1' },
@@ -59,7 +58,8 @@ export default {
           { prop: 'remember', label: '记住密码', is: 'checkbox' },
           { prop: 'gender', label: '性别', is: 'radioGroup', list: [{ label: 'male', value: '男' }, { label: 'famale', value: '女', disabled: true }] },
           { prop: 'love', label: '爱好', is: 'checkboxGroup', list: [{ label: '篮球', value: '0' }, { label: '排球', value: '1' }, { label: '足球', value: '2', disabled: true }] },
-          { prop: 'delivery', label: '即时配送', is: 'switch' }
+          { prop: 'delivery', label: '即时配送', is: 'switch' },
+          { prop: 'qrcode', label: '二维码', is: 'image' }
         ],
         data: {
           name: '东',
@@ -74,12 +74,18 @@ export default {
           remember: null,
           gender: null,
           love: ['0'],
-          delivery: true
+          delivery: true,
+          qrcode: '111116879451'
         },
         rowSize: 1 // 一行可以展示几列表单，默认为3列
       }
     }
   },
+
+  mounted() {
+    JsBarcode('#barcode', this.config.data.qrcode)
+  },
+
   methods: {
     querySearch(q, cb) {
       if (!q) { cb([]); return }
