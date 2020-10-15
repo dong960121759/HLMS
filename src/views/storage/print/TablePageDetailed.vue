@@ -116,7 +116,7 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
 .content {
   width: 300px;
   border: 1px solid #000;
