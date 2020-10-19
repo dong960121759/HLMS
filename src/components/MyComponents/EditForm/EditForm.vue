@@ -9,7 +9,7 @@
     </el-row>
     <div v-if="footer" class="searchBtn">
       <el-button class="filter-item" size="mini" @click="reset">重置</el-button>
-      <el-button class="filter-item" size="mini" type="primary" @click="submit">查询</el-button>
+      <el-button class="filter-item" size="mini" type="primary" @click="submit">{{ config.submitname }}</el-button>
     </div>
   </el-form>
 </template>
@@ -158,5 +158,8 @@ export default {
 .width-full{
   width: 80%;
   border: 0px;
+}
+.searchBtn{
+  text-align: center;
 }
 </style>

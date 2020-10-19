@@ -51,7 +51,7 @@ export function fetchAccessStorageRequisition(query) {
 // 库存列表
 export function fetchStorageEntry(query) {
   return request({
-    url: '/vue-element-admin/article/list',
+    url: 'http://42.194.139.70/mock/11/logistics/warehouse/inventory-details',
     method: 'get',
     params: query
   })

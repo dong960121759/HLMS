@@ -51,12 +51,12 @@ export default {
     return {
       config: {
         headers: [
-          { prop: 'id', name: '物资名称', attrs: { width: 200, align: 'center' }},
-          { prop: 'status', name: '型号规格', attrs: { align: 'center' }},
-          { prop: 'author', name: '库存数量', attrs: { align: 'center' }},
-          { prop: 'author', name: '未锁定库存', attrs: { align: 'center' }},
-          { prop: 'timestamp', name: '最近一次入库时间', type: 'Date', attrs: { align: 'center' }},
-          { prop: 'timestamp', name: '最近一次出库时间', type: 'Date', attrs: { align: 'center' }}
+          { prop: 'materialId', name: '物资ID', attrs: { width: 200, align: 'center' }},
+          { prop: 'materialName', name: '物资名称', attrs: { width: 200, align: 'center' }},
+          { prop: 'totalNumber', name: '库存数量', attrs: { align: 'center' }},
+          { prop: 'unlockedNumber', name: '未锁定库存', attrs: { align: 'center' }},
+          { prop: 'lastInBound', name: '最近一次入库时间', type: 'Date', attrs: { align: 'center' }},
+          { prop: 'lastOutBound', name: '最近一次出库时间', type: 'Date', attrs: { align: 'center' }}
         ].concat(this.getActions()),
         tableData: [],
         hasCheckbox: true
@@ -68,9 +68,9 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 10,
-        type: undefined,
-        sort: '+id'
+        size: 10,
+        warehouseId: 24124124,
+        inventoryId: 34148724
       },
       loading: false,
       multipleSelection: [],
@@ -90,12 +90,8 @@ export default {
       this.$emit('create') // for test
       fetchStorageEntry(this.listQuery).then(response => {
         this.config.tableData = response.data.items
-        console.log('response.data.items')
+        console.log(this.config.tableData)
         this.total = response.data.total
-        this.loading = false
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
       })
     },
     handleSelectionChange(val) {

@@ -27,11 +27,7 @@ export default {
         total: 0,
         listQuery: {
           page: 1,
-          limit: 10,
-          type: undefined,
-          sort: '+id',
-          oid: undefined,
-          dateValue: undefined
+          limit: 10
         },
         dateValue1: '',
         isInStorage: false,

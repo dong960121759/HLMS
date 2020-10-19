@@ -116,7 +116,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style>
 .content {
   width: 300px;
   border: 1px solid #000;
@@ -127,10 +127,12 @@ export default {
 .content li {
   padding: 10px 0;
 }
-.el-input__inner {
-   border: 0px;
+.width-full .el-input__inner {
+   border-left:0px;
+   border-top:0px;
+   border-right:0px;
 }
-.el-textarea__inner {
+.width-full .el-textarea__inner {
    border: 0px;
 }
 </style>

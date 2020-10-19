@@ -13,6 +13,12 @@ const storageRouter = {
   },
   children: [
     {
+      path: 'create-warehouse',
+      component: () => import('@/views/storage/warehouse/create-warehouse'),
+      name: 'CreateWarehouse',
+      meta: { title: 'createWarehouse' }
+    },
+    {
       path: 'print',
       component: () => import('@/views/storage/print/TablePageDetailed'),
       name: 'print',

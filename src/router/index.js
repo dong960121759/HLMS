@@ -166,6 +166,15 @@ export const asyncRoutes = [
         }
       },
       {
+        path: 'process',
+        component: () => import('@/views/permission/process/process'),
+        name: 'ProcessArrangement',
+        meta: {
+          title: 'processArrangement'
+          // if do not set roles, means: this page does not require permission
+        }
+      },
+      {
         path: 'role',
         component: () => import('@/views/permission/role'),
         name: 'RolePermission',
