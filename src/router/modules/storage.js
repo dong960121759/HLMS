@@ -19,6 +19,12 @@ const storageRouter = {
       meta: { title: 'createWarehouse' }
     },
     {
+      path: 'warehouse',
+      component: () => import('@/views/storage/warehouse/warehouse'),
+      name: 'Warehouse',
+      meta: { title: 'warehouse' }
+    },
+    {
       path: 'print',
       component: () => import('@/views/storage/print/TablePageDetailed'),
       name: 'print',
@@ -31,12 +37,6 @@ const storageRouter = {
       meta: { title: 'storageEntry' }
     },
     {
-      path: 'requisition-management',
-      component: () => import('@/views/storage/requisition-management'),
-      name: 'RequisitionManagement',
-      meta: { title: 'requisitionManagement' }
-    },
-    {
       path: 'allot-requisition',
       component: () => import('@/views/storage/allot-requisition'),
       name: 'AllotRequisition',
@@ -47,18 +47,6 @@ const storageRouter = {
       component: () => import('@/views/storage/warehouse-inout-application'),
       name: 'WarehouseInOut',
       meta: { title: 'warehouseInOut' }
-    },
-    {
-      path: 'stocktake-no-id',
-      component: () => import('@/views/storage/requisition-management'),
-      name: 'StocktakeNoID',
-      meta: { title: 'stocktakeNoID' }
-    },
-    {
-      path: 'stocktake-is-id',
-      component: () => import('@/views/storage/requisition-management'),
-      name: 'StocktakeIsID',
-      meta: { title: 'stocktakeIsID' }
     }
   ]
 }

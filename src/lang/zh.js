@@ -9,6 +9,7 @@ export default {
     backToTop: '返回顶部',
     Storage: '仓库与库存管理',
     createWarehouse: '新建仓库',
+    warehouse: '仓库清单',
     storageEntry: '库存明细',
     warehouseInOut: '出入库申请',
     requisitionManagement: '领用申请管理',

@@ -32,6 +32,7 @@ export default {
         dateValue1: '',
         isInStorage: false,
         isLog: false,
+        isHasDate: true,
         optionName: '新建领用申请'
       },
       isAccessDetailed: false

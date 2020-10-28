@@ -33,11 +33,13 @@
           multiple
           filterable
           remote
+          style="width: 100%"
           reserve-keyword
           placeholder="请输入关键词"
           :remote-method="remoteMethod"
           :loading="loading"
           :trigger-on-focus="true"
+          @remove-tag="delectTip"
         >
           <el-option
             v-for="item in options"
@@ -68,10 +70,14 @@
         <el-button @click="resetForm('warehouseForm')">重置</el-button>
       </el-form-item>
     </el-form>
+
   </div>
 
 </template>
 <script>
+import { getUsers } from '@/api/article'
+import { createWarehouse } from '@/api/storage'
+
 export default {
   data() {
     return {
@@ -87,29 +93,13 @@ export default {
       loading: false,
       options: [],
       list: [],
-      states: ['Alabama', 'Alaska', 'Arizona',
-        'Arkansas', 'California', 'Colorado',
-        'Connecticut', 'Delaware', 'Florida',
-        'Georgia', 'Hawaii', 'Idaho', 'Illinois',
-        'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-        'Louisiana', 'Maine', 'Maryland',
-        'Massachusetts', 'Michigan', 'Minnesota',
-        'Mississippi', 'Missouri', 'Montana',
-        'Nebraska', 'Nevada', 'New Hampshire',
-        'New Jersey', 'New Mexico', 'New York',
-        'North Carolina', 'North Dakota', 'Ohio',
-        'Oklahoma', 'Oregon', 'Pennsylvania',
-        'Rhode Island', 'South Carolina',
-        'South Dakota', 'Tennessee', 'Texas',
-        'Utah', 'Vermont', 'Virginia',
-        'Washington', 'West Virginia', 'Wisconsin',
-        'Wyoming']
+      states: []
     }
   },
   mounted() {
-    this.list = this.states.map(item => {
-      return { value: `value:${item}`, label: `label:${item}` }
-    })
+    this.getAdmin()
+    console.log('1111111111111111111111111111111')
+    console.log(this.states)
   },
   methods: {
     submitForm(formName) {
@@ -117,6 +107,9 @@ export default {
         if (valid) {
           alert(formName)
           console.log(this.warehouseForm)
+          createWarehouse(formName).then(response => {
+            this.list = response
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -128,10 +121,15 @@ export default {
     },
     removeDomain(item) {
       var index = this.warehouseForm.inventories.indexOf(item)
-      if (this.warehouseForm.inventories.length > 0) {
+      if (this.warehouseForm.inventories.length > 1) {
         if (index !== -1) {
           this.warehouseForm.inventories.splice(index, 1)
         }
+      } else {
+        this.$message({
+          message: '至少要有一个库存',
+          type: 'warning'
+        })
       }
     },
     addDomain() {
@@ -140,6 +138,7 @@ export default {
         key: Date.now()
       })
     },
+
     remoteMethod(query) {
       if (query !== '') {
         this.loading = true
@@ -151,8 +150,39 @@ export default {
           })
         }, 200)
       } else {
-        this.options = []
+        this.options = this.list
       }
+    },
+    getAdmin() {
+      getUsers().then(response => {
+        this.states = response.admins
+        this.list = this.states.map(item => {
+          console.log(item.userID)
+          return { value: `${item.userID}`, label: `${item.userID},` + `${item.userName}` }
+        })
+        this.options = this.list
+        console.log('22222222222222222222222')
+        console.log(this.states)
+      })
+    },
+    delectTip(key) {
+      console.log(key)
+      console.log('111')
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   }
 }
@@ -165,6 +195,6 @@ export default {
   width: 20%;
 }
 .width-input-2{
-  width: 72%;
+  width: 68%;
 }
 </style>

@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+// 获得管理员列表
+export function getUsers() {
+  return request({
+    url: '/logistics/api/logistics/api/warehouse/getUsers',
+    method: 'get'
+  })
+}
+
 export function fetchList(query) {
   return request({
     url: '/vue-element-admin/article/list',
@@ -51,7 +59,7 @@ export function fetchAccessStorageRequisition(query) {
 // 库存列表
 export function fetchStorageEntry(query) {
   return request({
-    url: 'http://42.194.139.70/mock/11/logistics/warehouse/inventory-details',
+    url: 'logistics/warehouse/inventory-details',
     method: 'get',
     params: query
   })

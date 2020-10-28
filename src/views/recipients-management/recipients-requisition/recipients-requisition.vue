@@ -15,9 +15,9 @@
       width="80%"
       center
       :close-on-click-modal="false"
-      :visible.sync="isInStorage"
+      :visible.sync="isOpenCreate"
     >
-      <in-storage v-if="isInStorage" ref="inStorage" />
+      <in-storage v-if="isOpenCreate" ref="inStorage" />
     </el-dialog>
   </div>
 </template>
@@ -54,9 +54,10 @@ export default {
         },
         dateValue1: '',
         isLog: true,
+        isHasDate: true,
         optionName: '新建领用申请'
       },
-      isInStorage: false,
+      isOpenCreate: false,
       isAccessDetailed: false,
       oid: 0
     }
@@ -74,9 +75,6 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
-    },
-    handleDownload() {
-      this.isInStorage = true
     },
     getActions() {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [

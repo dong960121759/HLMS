@@ -29,7 +29,7 @@
 <script>
 
 export default {
-  name: 'DataTable',
+  name: '',
   components: { },
   props: {
     columns: {

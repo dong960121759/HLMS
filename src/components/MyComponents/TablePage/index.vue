@@ -2,8 +2,9 @@
   <div class="">
     <div class="filter-container" style="padding-bottom: 10px;">
       <el-row :gutter="20">
-        <el-col :span="6"> <el-input v-model="listQuery.oid" size="mini" placeholder="输入代码" style="width: 300px; margin-right:20px; margin-bottom: 0px; " class="filter-item" @keyup.enter.native="handleFilter" /></el-col>
+        <el-col :span="6"> <el-input v-model="listQuery.oid" size="mini" :placeholder="elinputText" style="width: 300px; margin-right:20px; margin-bottom: 0px; " class="filter-item" @keyup.enter.native="handleFilter" /></el-col>
         <el-col :span="8"> <el-date-picker
+          v-if="isHasDate"
           v-model="listQuery.dateValue"
           type="daterange"
           unlink-panels
@@ -20,7 +21,7 @@
         <el-col :span="2"><el-button v-waves class="filter-item" size="mini" type="danger" icon="el-icon-delete" style="margin-bottom: 0px; " @click="deleteSelect">
           删除所选
         </el-button></el-col>
-        <el-col :span="2"> <el-button v-if="isLog" v-waves class="filter-item" size="mini" type="primary" icon="el-icon-plus" style="margin-bottom: 0px; margin-left:30px;" @click="handleDownload">
+        <el-col :span="4" :offset="2"> <el-button v-if="isLog" v-waves class="filter-item" size="mini" type="primary" icon="el-icon-plus" style="margin-bottom: 0px; margin-left:30px;" @click="handleDownload">
           {{ pageConfig.optionName }}
         </el-button></el-col>
       </el-row>
@@ -32,7 +33,7 @@
 <script>
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import DataTable from '../DataTable.vue'
+import DataTable from '../DataTable'
 
 export default {
   name: 'TablePage',
@@ -59,7 +60,14 @@ export default {
       listQuery: this.pageConfig.listQuery,
       dateValue1: this.pageConfig.dateValue1,
       materialCode: '',
-      isLog: this.pageConfig.isLog
+      isLog: this.pageConfig.isLog,
+      isHasDate: this.pageConfig.isHasDate
+    }
+  },
+  computed: {
+    elinputText() {
+      console.log(this.config.headers)
+      return '请输入' + this.config.headers[0].name
     }
   },
   created() {
@@ -74,7 +82,7 @@ export default {
       this.getList()
     },
     handleDownload() {
-      this.$parent.isInStorage = true
+      this.$parent.isOpenCreate = true
     },
     getActions() {
       this.$parent.getActions()

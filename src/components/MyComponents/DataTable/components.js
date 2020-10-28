@@ -4,6 +4,7 @@ import Currency from './Currency'
 import Enum from './Enum'
 import Action from './Action'
 import Popover from './Popover'
+import PopoverList from './Popover-list'
 
 export {
   Default,
@@ -11,5 +12,6 @@ export {
   Currency,
   Enum,
   Action,
-  Popover
+  Popover,
+  PopoverList
 }

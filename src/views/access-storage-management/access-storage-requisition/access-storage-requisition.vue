@@ -45,7 +45,7 @@
 import { fetchAccessStorageRequisition } from '@/api/article'
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import DataTable from '@/components/MyComponents/DataTable.vue'
+import DataTable from '@/components/MyComponents/DataTable'
 import AccessDetailed from './access-detailed.vue'
 import InStorage from './in-storage.vue'
 export default {

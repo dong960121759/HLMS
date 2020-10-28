@@ -13,6 +13,7 @@
 import Cell from './cell'
 
 export default {
+  name: 'DataTable',
   components: {
     Cell
   },

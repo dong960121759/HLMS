@@ -9,7 +9,7 @@
 <script>
 import { fetchAccessStorageRequisition } from '@/api/article'
 import EditForm1 from '@/components/MyComponents/EditForm/EditForm'
-import DataTable from '@/components/MyComponents/DataTable.vue'
+import DataTable from '@/components/MyComponents/DataTable'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 const statusLlist = [
   { label: '未提交', value: '0' },

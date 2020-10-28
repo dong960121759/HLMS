@@ -2,7 +2,7 @@
   <el-popover
     placement="top-start"
     width="300"
-    trigger="hover"
+    trigger="focus"
     popper-class="popover"
     :content="props.value"
   >

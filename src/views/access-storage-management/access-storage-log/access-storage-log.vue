@@ -24,7 +24,7 @@
 </template>
 <script>
 import { fetchAccessStorageRequisition } from '@/api/article'
-import DataTable from '@/components/MyComponents/DataTable.vue'
+import DataTable from '@/components/MyComponents/DataTable'
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 

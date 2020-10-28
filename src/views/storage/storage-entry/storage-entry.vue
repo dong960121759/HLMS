@@ -25,7 +25,7 @@
 import { fetchStorageEntry } from '@/api/article'
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import DataTable from '../../../components/MyComponents/DataTable.vue'
+import DataTable from '@/components/MyComponents/DataTable'
 import AccessDetailed from './storage-entry-detailed.vue'
 export default {
   name: 'StorageEntry',
