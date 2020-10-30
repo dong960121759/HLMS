@@ -41,6 +41,29 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+
+      <el-form :inline="true" :model="user" size="mini" class=" demo-form-inline right-menu-item right-menu-item-from">
+
+        <el-form-item label="工号:" style="padding: 0px">
+          <el-input v-model="user.userID" class="el-form-itemnew" placeholder="" />
+        </el-form-item>
+
+        <el-form-item label="姓名:">
+          <el-input v-model="user.userName" class="el-form-itemnew" placeholder="" />
+        </el-form-item>
+
+        <el-form-item label="地点:" style="padding: 0px">
+          <el-select v-model="value" size="mini" class="right-menu-select" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+
+      </el-form>
     </div>
   </div>
 </template>
@@ -54,7 +77,7 @@ import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
-
+import { fetchLocale } from '@/api/article'
 export default {
   components: {
     Breadcrumb,
@@ -65,6 +88,17 @@ export default {
     LangSelect,
     Search
   },
+  data() {
+    return {
+      options: [],
+      value: '',
+      user: {
+        userID: '111111',
+        userName: '王小明'
+      }
+    }
+  },
+
   computed: {
     ...mapGetters([
       'sidebar',
@@ -72,7 +106,15 @@ export default {
       'device'
     ])
   },
+  mounted() {
+    this.getOptions(this.id)
+  },
   methods: {
+    getOptions(id) {
+      fetchLocale(id).then(response => {
+        this.options = response
+      })
+    },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
@@ -83,8 +125,29 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.right-menu-item-from {
 
+  .el-form-item__content  {
+    margin-top: 10px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .right-menu-item-from  .el-form-item__label {
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+    font-size: 14px;
+    color: #606266;
+    line-height: 40px;
+    padding: 0 5px 0 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+}
+</style>
 <style lang="scss" scoped>
+
 .navbar {
   height: 50px;
   overflow: hidden;
@@ -142,7 +205,7 @@ export default {
     }
 
     .avatar-container {
-      margin-right: 30px;
+      margin-right: 10px;
 
       .avatar-wrapper {
         margin-top: 5px;
@@ -164,6 +227,9 @@ export default {
         }
       }
     }
+    .el-form-itemnew {
+    width: 80px;
+  }
   }
 }
 </style>

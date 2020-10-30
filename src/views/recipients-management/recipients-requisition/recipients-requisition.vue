@@ -6,9 +6,9 @@
       width="80%"
       center
       :close-on-click-modal="false"
-      :visible.sync="isAccessDetailed"
+      :visible.sync="isOpenDetailed"
     >
-      <TablePageDetailed v-if="isAccessDetailed" ref="tablePageDetailed" :oid="oid" />
+      <TablePageDetailed v-if="isOpenDetailed" ref="tablePageDetailed" :oid="oid" />
     </el-dialog>
     <el-dialog
       title="新建领用申请单"
@@ -58,7 +58,7 @@ export default {
         optionName: '新建领用申请'
       },
       isOpenCreate: false,
-      isAccessDetailed: false,
+      isOpenDetailed: false,
       oid: 0
     }
   },
@@ -80,7 +80,7 @@ export default {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
         { id: '1', label: '查看', click: data => {
           console.log(data)
-          this.isAccessDetailed = true
+          this.isOpenDetailed = true
         } }
       ] }
     },

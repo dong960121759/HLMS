@@ -15,9 +15,9 @@
       width="80%"
       center
       :close-on-click-modal="false"
-      :visible.sync="isAccessDetailed"
+      :visible.sync="isOpenDetailed"
     >
-      <access-detailed v-if="isAccessDetailed" ref="accessDetailed" />
+      <access-detailed v-if="isOpenDetailed" ref="accessDetailed" />
     </el-dialog>
   </div>
 </template>
@@ -76,8 +76,8 @@ export default {
       multipleSelection: [],
       switchRoles: 'in',
       dateValue1: '',
-      isAccessDetailed: false,
-      isInStorage: false
+      isOpenDetailed: false,
+      isOpenCreate: false
     }
   },
   created() {
@@ -118,7 +118,7 @@ export default {
     handleUpdate(row) {
     },
     handleDownload() {
-      this.isInStorage = true
+      this.isOpenCreate = true
     },
     getSortClass: function(key) {
       const sort = this.listQuery.sort
@@ -131,13 +131,13 @@ export default {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
         { label: '查看', click: data => {
           console.log(data)
-          this.isAccessDetailed = true
+          this.isOpenDetailed = true
         } }
       ] }
     },
     tableDbEdit(e) {
       console.log('aaaaaaaaaaaaaaaaaaaa')
-      this.isAccessDetailed = true
+      this.isOpenDetailed = true
     }
   }
 }

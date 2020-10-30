@@ -26,18 +26,18 @@
       width="80%"
       center
       :close-on-click-modal="false"
-      :visible.sync="isAccessDetailed"
+      :visible.sync="isOpenDetailed"
     >
-      <access-detailed v-if="isAccessDetailed" ref="accessDetailed" />
+      <access-detailed v-if="isOpenDetailed" ref="accessDetailed" />
     </el-dialog>
     <el-dialog
       title="入库申请单"
       width="80%"
       center
       :close-on-click-modal="false"
-      :visible.sync="isInStorage"
+      :visible.sync="isOpenCreate"
     >
-      <in-storage v-if="isInStorage" ref="inStorage" />
+      <in-storage v-if="isOpenCreate" ref="inStorage" />
     </el-dialog>
   </div>
 </template>
@@ -96,8 +96,8 @@ export default {
       multipleSelection: [],
       switchRoles: 'in',
       dateValue1: '',
-      isAccessDetailed: false,
-      isInStorage: false,
+      isOpenDetailed: false,
+      isOpenCreate: false,
       citys: [],
       cities: [
         { value: '0', label: '调拨入库' },
@@ -129,13 +129,13 @@ export default {
       this.getList()
     },
     handleDownload() {
-      this.isInStorage = true
+      this.isOpenCreate = true
     },
     getActions() {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
         { id: '1', label: '查看', click: data => {
           console.log(data)
-          this.isAccessDetailed = true
+          this.isOpenDetailed = true
         } }
       ] }
     },
@@ -144,7 +144,7 @@ export default {
     },
     tableDbEdit(e) {
       console.log('aaaaaaaaaaaaaaaaaaaa')
-      this.isAccessDetailed = true
+      this.isOpenDetailed = true
     }
   }
 }

@@ -7,6 +7,14 @@ export function getUsers() {
     method: 'get'
   })
 }
+// 获得该用户可登录地址
+export function fetchLocale(userID) {
+  return request({
+    url: '/logistics/api/logistics/api/warehouse/getUsers',
+    method: 'get',
+    params: { userID }
+  })
+}
 
 export function fetchList(query) {
   return request({

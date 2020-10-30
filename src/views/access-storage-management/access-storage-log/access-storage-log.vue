@@ -133,7 +133,7 @@ export default {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
         { label: '查看', click: data => {
           console.log(data)
-          this.isAccessDetailed = true
+          this.isOpenDetailed = true
         }
         },
         { label: '删除', click: data => {

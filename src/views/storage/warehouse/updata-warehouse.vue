@@ -22,14 +22,15 @@
 
       <el-form-item
         class="width-input"
-        prop="admin"
+        prop="admins"
         label="管理员:"
         :rules="[
           { required: true, message: '管理员不能为空', trigger: 'blur' }
         ]"
       >
         <el-select
-          v-model="warehouseForm.admin"
+          :key="keying"
+          v-model="warehouseForm.admins"
           multiple
           filterable
           remote
@@ -39,6 +40,7 @@
           :remote-method="remoteMethod"
           :loading="loading"
           :trigger-on-focus="true"
+          @remove-tag="delectTip"
         >
           <el-option
             v-for="item in options"
@@ -64,9 +66,8 @@
         <el-button @click.prevent="removeDomain(inventory)">删除</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('warehouseForm')">提交</el-button>
+        <el-button type="primary" :disabled="isdisabled ==-1?true:false" @click="submitForm('warehouseForm')">提交</el-button>
         <el-button @click="addDomain">新增库存</el-button>
-        <el-button @click="resetForm('warehouseForm')">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -75,9 +76,17 @@
 </template>
 <script>
 import { getUsers } from '@/api/article'
-import { createWarehouse } from '@/api/storage'
+import { createWarehouse, fetchWarehouse } from '@/api/storage'
 
 export default {
+  props: {
+    warehouseId: {
+      type: String,
+      default: () => {
+        return null
+      }
+    }
+  },
   data() {
     return {
       warehouseForm: {
@@ -87,20 +96,46 @@ export default {
         }],
         name: '',
         description: '',
-        admin: []
+        admins: []
       },
       loading: false,
       options: [],
       list: [],
-      states: []
+      keying: 0,
+      isdisabled: -1,
+      states: [],
+      isInit: false
+    }
+  },
+  watch: {
+    'warehouseForm': function(newVal, oldVal) {
+      if (oldVal.name !== '') {
+        this.isdisabled = 0
+      }
+    },
+    'warehouseForm.inventories': function(newVal, oldVal) {
+      console.log(oldVal[0].name)
+      if (oldVal[0].name !== '') {
+        this.isdisabled = 0
+      }
+    },
+    'warehouseForm.admins': function(newVal, oldVal) {
+      console.log(oldVal)
+      if (oldVal.length > 0) {
+        this.isdisabled = 0
+      }
     }
   },
   mounted() {
     this.getAdmin()
-    console.log('1111111111111111111111111111111')
-    console.log(this.states)
+    this.getwarehoues()
   },
   methods: {
+    getwarehoues() {
+      fetchWarehouse(this.warehouseId).then(response => {
+        this.warehouseForm = response
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -119,17 +154,33 @@ export default {
       this.$refs[formName].resetFields()
     },
     removeDomain(item) {
-      var index = this.warehouseForm.inventories.indexOf(item)
-      if (this.warehouseForm.inventories.length > 1) {
-        if (index !== -1) {
-          this.warehouseForm.inventories.splice(index, 1)
+      console.log(item)
+      this.$confirm('是否删除' + item.name, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        var index = this.warehouseForm.inventories.indexOf(item)
+        if (this.warehouseForm.inventories.length > 1) {
+          if (index !== -1) {
+            this.warehouseForm.inventories.splice(index, 1)
+          }
+        } else {
+          this.$message({
+            message: '至少要有一个库存',
+            type: 'warning'
+          })
         }
-      } else {
         this.$message({
-          message: '至少要有一个库存',
-          type: 'warning'
+          type: 'success',
+          message: '删除成功!'
         })
-      }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     addDomain() {
       this.warehouseForm.inventories.push({
@@ -156,15 +207,35 @@ export default {
       getUsers().then(response => {
         this.states = response.admins
         this.list = this.states.map(item => {
-          console.log(item.userID)
           return { value: `${item.userID}`, label: `${item.userID},` + `${item.userName}` }
         })
         this.options = this.list
-        console.log('22222222222222222222222')
-        console.log(this.states)
+        console.log(this.options)
+        console.log(this.warehouseForm.admins)
+      })
+    },
+    delectTip(key) {
+      console.log(key)
+      console.log(this.warehouseForm.admins)
+      this.$confirm('是否删除id为' + key + '管理员', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.warehouseForm.admins[this.warehouseForm.admins.length] = key
+        console.log(this.warehouseForm.admins)
+        this.keying += 1
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     }
-
   }
 }
 </script>

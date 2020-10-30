@@ -30,12 +30,12 @@ export default {
           limit: 10
         },
         dateValue1: '',
-        isInStorage: false,
+        isOpenCreate: false,
         isLog: false,
         isHasDate: true,
         optionName: '新建领用申请'
       },
-      isAccessDetailed: false
+      isOpenDetailed: false
 
     }
   },
@@ -54,14 +54,14 @@ export default {
       })
     },
     handleDownload() {
-      this.isInStorage = true
+      this.isOpenCreate = true
     },
     getActions() {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
         { id: '1', label: '查看', click: data => {
           console.log(data)
-          this.isAccessDetailed = true
-          console.log(this.pageConfig.isAccessDetailed)
+          this.isOpenDetailed = true
+          console.log(this.pageConfig.isOpenDetailed)
         } }
       ] }
     },

@@ -21,7 +21,7 @@
         <el-col :span="2"><el-button v-waves class="filter-item" size="mini" type="danger" icon="el-icon-delete" style="margin-bottom: 0px; " @click="deleteSelect">
           删除所选
         </el-button></el-col>
-        <el-col :span="4" :offset="2"> <el-button v-if="isLog" v-waves class="filter-item" size="mini" type="primary" icon="el-icon-plus" style="margin-bottom: 0px; margin-left:30px;" @click="handleDownload">
+        <el-col :span="4" :offset="2" style="float: right;"> <el-button v-if="isLog" v-waves class="filter-item" size="mini" type="primary" icon="el-icon-plus" style="margin-bottom: 0px; margin-left:30px;" @click="handleDownload">
           {{ pageConfig.optionName }}
         </el-button></el-col>
       </el-row>
@@ -61,7 +61,8 @@ export default {
       dateValue1: this.pageConfig.dateValue1,
       materialCode: '',
       isLog: this.pageConfig.isLog,
-      isHasDate: this.pageConfig.isHasDate
+      isHasDate: this.pageConfig.isHasDate,
+      currentRow: null
     }
   },
   computed: {
@@ -88,32 +89,65 @@ export default {
       this.$parent.getActions()
     },
     tableDbEdit(e) {
-      this.$parent.isAccessDetailed = true
+      this.$parent.isOpenDetailed = true
+    },
+    handleCurrentChange(val) {
+      console.log('111111111111111111111')
+      this.currentRow = val
+      console.log(this.currentRow)
     },
     deleteSelect() {
-      if (this.$refs.table.getChecked().length === 0) {
-        this.$message({
-          message: '请选择要删除的内容',
-          type: 'warning'
-        })
+      console.log(this.config.hasCheckbox)
+      if (this.config.hasCheckbox) {
+        if (this.$refs.table.getChecked().length === 0) {
+          this.$message({
+            message: '请选择要删除的内容',
+            type: 'warning'
+          })
+        } else {
+          this.$confirm('此操作将删除所选, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            console.log(this.$refs.table.getChecked())
+            this.$parent.deleteSelect(this.$refs.table.getChecked())
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
+        }
       } else {
-        this.$confirm('此操作将删除所选, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          console.log(this.$refs.table.getChecked())
-          this.$parent.deleteSelect(this.$refs.table.getChecked())
+        console.log(this.currentRow)
+        if (this.currentRow === null) {
           this.$message({
-            type: 'success',
-            message: '删除成功!'
+            message: '请选择要删除的内容',
+            type: 'warning'
           })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
+        } else {
+          this.$confirm('此操作将删除所选, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$parent.deleteSelect(this.currentRow)
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
           })
-        })
+        }
       }
     },
     selectdate() {

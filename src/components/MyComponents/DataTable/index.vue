@@ -1,5 +1,14 @@
 <template>
-  <el-table :data="config.tableData" style="width: 100%" v-bind="cfg.attrs" :row-click="getTableEvents" v-on="cfg.on" @row-dblclick="tableDbEdit">
+  <el-table
+    :data="config.tableData"
+    style="width: 100%"
+    v-bind="cfg.attrs"
+    :row-click="getTableEvents"
+    highlight-current-row
+    v-on="cfg.on"
+    @current-change="handleCurrentChange"
+    @row-dblclick="tableDbEdit"
+  >
     <el-table-column v-if="cfg.hasCheckbox" type="selection" width="55" label="xx" />
     <el-table-column v-for="n in cfg.headers" :key="n.prop" :prop="n.prop" :label="n.name" v-bind="{...columnAttrs, ...n.attrs}">
       <template slot-scope="{row}">
@@ -60,6 +69,10 @@ export default {
     },
     tableDbEdit() {
       this.$emit(`tableDbEdit`, this.checked)
+    },
+    handleCurrentChange(val) {
+      console.log(val)
+      this.$emit(`handleCurrentChange`, val)
     }
   }
 }

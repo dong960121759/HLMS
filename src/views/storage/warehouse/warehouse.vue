@@ -8,17 +8,27 @@
       :close-on-click-modal="false"
       :visible.sync="isOpenCreate"
     >
-      <TablePageDetailed v-if="isOpenCreate" ref="inStorage" />
+      <CreateWarehouse v-if="isOpenCreate" ref="isOpenCreate" />
+    </el-dialog>
+    <el-dialog
+      title="仓库详情"
+      width="80%"
+      center
+      :close-on-click-modal="false"
+      :visible.sync="isOpenDetailed"
+    >
+      <WarehouseDetailed v-if="isOpenDetailed" ref="isOpenDetailed" :warehouse-id="warehouseId" />
     </el-dialog>
   </div>
 </template>
 <script>
 import { fetchWarehouseList, deleteWarehouseList } from '@/api/storage'
 import TablePage from '@/components/MyComponents/TablePage'
-import TablePageDetailed from './create-warehouse'
+import CreateWarehouse from './create-warehouse'
+import WarehouseDetailed from './updata-warehouse'
 export default {
   name: '',
-  components: { TablePage, TablePageDetailed },
+  components: { TablePage, CreateWarehouse, WarehouseDetailed },
   data() {
     return {
       config: {
@@ -29,7 +39,7 @@ export default {
           { prop: 'authorities', name: '所需权限列表', type: 'Popover', attrs: { align: 'center' }}
         ].concat(this.getActions()),
         tableData: [],
-        hasCheckbox: true
+        hasCheckbox: false
       },
       pageConfig: {
         total: 0,
@@ -38,14 +48,15 @@ export default {
           limit: 10
         },
         dateValue1: '',
-        isInStorage: false,
+        isOpenCreate: false,
         isLog: true,
         isHasDate: false,
         optionName: '新建仓库'
       },
-      isAccessDetailed: false,
-      isOpenCreate: false
-
+      isOpenDetailed: false,
+      isOpenCreate: false,
+      warehouseId: '',
+      currentRow: null
     }
   },
   created() {
@@ -61,16 +72,19 @@ export default {
       })
     },
     handleDownload() {
-      this.isInStorage = true
+      this.isOpenCreate = true
     },
     getActions() {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
         { id: '1', label: '查看', click: data => {
-          console.log(data)
-          this.isAccessDetailed = true
-          console.log(this.pageConfig.isAccessDetailed)
+          this.isOpenDetailed = true
+          this.warehouseId = data.id
+          console.log(this.pageConfig.isOpenDetailed)
         } }
       ] }
+    },
+    handleCurrentChange(val) {
+      this.currentRow = val
     },
     deleteSelect(e) {
       console.log(e[0].id)

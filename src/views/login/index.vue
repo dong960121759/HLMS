@@ -141,8 +141,6 @@ export default {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm)
             .then(() => {
-              console.log(this.otherQuery)
-              console.log(this.redirect)
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
               this.loading = false
             })
@@ -225,7 +223,7 @@ $cursor: #fff;
 
   .el-form-item {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     color: #454545;
   }
@@ -233,9 +231,9 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#b8d5fc;
-$dark_gray:#889aa4;
-$light_gray:#eee;
+$bg:#b9d8f6 ;
+$dark_gray:#034b72;
+$light_gray:rgb(0, 0, 0);
 
 .login-container {
   min-height: 100%;

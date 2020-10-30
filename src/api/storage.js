@@ -23,4 +23,11 @@ export function createWarehouse(query) {
     params: query
   })
 }
-
+// 仓库详情
+export function fetchWarehouse(warehouseId) {
+  return request({
+    url: '/logistics/api/warehouse/warehouse-detail',
+    method: 'get',
+    params: warehouseId
+  })
+}
