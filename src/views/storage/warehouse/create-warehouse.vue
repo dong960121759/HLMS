@@ -97,8 +97,6 @@ export default {
   },
   mounted() {
     this.getAdmin()
-    console.log('1111111111111111111111111111111')
-    console.log(this.states)
   },
   methods: {
     submitForm(formName) {
@@ -156,12 +154,9 @@ export default {
       getUsers().then(response => {
         this.states = response.admins
         this.list = this.states.map(item => {
-          console.log(item.userID)
           return { value: `${item.userID}`, label: `${item.userID},` + `${item.userName}` }
         })
         this.options = this.list
-        console.log('22222222222222222222222')
-        console.log(this.states)
       })
     }
 

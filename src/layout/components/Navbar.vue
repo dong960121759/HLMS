@@ -20,6 +20,29 @@
 
       </template>
 
+      <el-form :inline="true" :model="user" size="mini" class=" demo-form-inline right-menu-item right-menu-item-from">
+
+        <el-form-item label="工号:" style="padding: 0px">
+          <el-input v-model="user.userID" disabled class="el-form-itemnew" placeholder="" />
+        </el-form-item>
+
+        <el-form-item label="姓名:">
+          <el-input v-model="name" disabled class="el-form-itemnew" placeholder="" />
+        </el-form-item>
+
+        <el-form-item label="地点:" style="padding: 0px">
+          <el-select v-model="value" size="mini" class="right-menu-select el-form-itemSelect" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+
+      </el-form>
+
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
@@ -41,29 +64,6 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-
-      <el-form :inline="true" :model="user" size="mini" class=" demo-form-inline right-menu-item right-menu-item-from">
-
-        <el-form-item label="工号:" style="padding: 0px">
-          <el-input v-model="user.userID" class="el-form-itemnew" placeholder="" />
-        </el-form-item>
-
-        <el-form-item label="姓名:">
-          <el-input v-model="user.userName" class="el-form-itemnew" placeholder="" />
-        </el-form-item>
-
-        <el-form-item label="地点:" style="padding: 0px">
-          <el-select v-model="value" size="mini" class="right-menu-select" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
-
-      </el-form>
     </div>
   </div>
 </template>
@@ -103,6 +103,7 @@ export default {
     ...mapGetters([
       'sidebar',
       'avatar',
+      'name',
       'device'
     ])
   },
@@ -228,8 +229,11 @@ export default {
       }
     }
     .el-form-itemnew {
-    width: 80px;
-  }
+    width: 90px;
+    }
+    .el-form-itemSelect{
+      width: 130px;
+    }
   }
 }
 </style>

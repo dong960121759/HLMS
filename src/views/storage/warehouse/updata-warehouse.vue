@@ -114,13 +114,11 @@ export default {
       }
     },
     'warehouseForm.inventories': function(newVal, oldVal) {
-      console.log(oldVal[0].name)
       if (oldVal[0].name !== '') {
         this.isdisabled = 0
       }
     },
     'warehouseForm.admins': function(newVal, oldVal) {
-      console.log(oldVal)
       if (oldVal.length > 0) {
         this.isdisabled = 0
       }
@@ -154,7 +152,6 @@ export default {
       this.$refs[formName].resetFields()
     },
     removeDomain(item) {
-      console.log(item)
       this.$confirm('是否删除' + item.name, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -210,13 +207,9 @@ export default {
           return { value: `${item.userID}`, label: `${item.userID},` + `${item.userName}` }
         })
         this.options = this.list
-        console.log(this.options)
-        console.log(this.warehouseForm.admins)
       })
     },
     delectTip(key) {
-      console.log(key)
-      console.log(this.warehouseForm.admins)
       this.$confirm('是否删除id为' + key + '管理员', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -228,7 +221,6 @@ export default {
         })
       }).catch(() => {
         this.warehouseForm.admins[this.warehouseForm.admins.length] = key
-        console.log(this.warehouseForm.admins)
         this.keying += 1
         this.$message({
           type: 'info',

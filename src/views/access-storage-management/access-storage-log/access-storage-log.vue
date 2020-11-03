@@ -127,7 +127,6 @@ export default {
       })
     },
     tableDbEdit(e) {
-      console.log('aaaaaaaaaaaaaaaaaaaa')
     },
     getActions() {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [

@@ -14,13 +14,13 @@ const stocktakeRouter = {
   children: [
     {
       path: 'stocktake-plan',
-      component: () => import('@/views/stocktake-management/stocktake-plan'),
+      component: () => import('@/views/stocktake-management/stocktake-plan/stocktake-plan'),
       name: 'StocktakePlan',
       meta: { title: 'stocktakePlan' }
     },
     {
       path: 'stocktake-log',
-      component: () => import('@/views/stocktake-management/stocktake-log'),
+      component: () => import('@/views/stocktake-management/stocktake-log/stocktake-log'),
       name: 'StocktakeLog',
       meta: { title: 'stocktakeLog' }
     }
