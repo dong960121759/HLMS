@@ -21,15 +21,18 @@
       </template>
 
       <el-form :inline="true" :model="user" size="mini" class=" demo-form-inline right-menu-item right-menu-item-from">
-
+        <!-- <el-row>
+          <el-col :xs="6" :sm="4" :md="4" :lg="8" :xl="10"> -->
         <el-form-item label="工号:" style="padding: 0px">
-          <el-input v-model="user.userID" disabled class="el-form-itemnew" placeholder="" />
+          <el-input v-model="user.userID" disabled class="el-form-itemnew" style="padding: 0 1px;" placeholder="" />
         </el-form-item>
-
+        <!-- </el-col>
+          <el-col :xs="6" :sm="4" :md="4" :lg="7" :xl="1"> -->
         <el-form-item label="姓名:">
           <el-input v-model="name" disabled class="el-form-itemnew" placeholder="" />
         </el-form-item>
-
+        <!-- </el-col>
+          <el-col :xs="6" :sm="6" :md="4" :lg="9" :xl="1"> -->
         <el-form-item label="地点:" style="padding: 0px">
           <el-select v-model="value" size="mini" class="right-menu-select el-form-itemSelect" placeholder="请选择">
             <el-option
@@ -40,7 +43,8 @@
             />
           </el-select>
         </el-form-item>
-
+        <!-- </el-col>
+        </el-row> -->
       </el-form>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
@@ -131,20 +135,42 @@ export default {
 
   .el-form-item__content  {
     margin-top: 10px;
+    margin-left: 0px;
     display: inline-block;
     vertical-align: top;
+    //width: 50%;
   }
-  .right-menu-item-from  .el-form-item__label {
+  .el-form-item__label {
     text-align: right;
     vertical-align: middle;
     float: left;
     font-size: 14px;
     color: #606266;
     line-height: 40px;
+    margin-top: 5px;
     padding: 0 5px 0 0;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
+  .el-input__inner {
+    -webkit-appearance: none;
+    background-color: #FFFFFF;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #DCDFE6;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 28px;
+    line-height: 28px;
+    outline: none;
+    padding: 0 5px;
+    -webkit-transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    width: 100%;
+}
 }
 </style>
 <style lang="scss" scoped>
@@ -229,10 +255,10 @@ export default {
       }
     }
     .el-form-itemnew {
-    width: 90px;
+      max-width: 75px;
     }
     .el-form-itemSelect{
-      width: 130px;
+      max-width: 120px;
     }
   }
 }

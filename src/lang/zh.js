@@ -11,7 +11,7 @@ export default {
     createWarehouse: '新建仓库',
     warehouse: '仓库清单',
     storageEntry: '库存明细',
-    warehouseInOut: '出入库申请',
+    inApplication: '入库申请',
     requisitionManagement: '领用申请管理',
     allotProcessManagement: '调拨进程管理',
     stocktakeNoID: '盘点（无ID的普通耗材）',

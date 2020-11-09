@@ -2,7 +2,7 @@
   <div class="">
     <div class="filter-container" style="padding-bottom: 10px;">
       <el-row :gutter="20">
-        <el-col :span="6"> <el-input v-model="listQuery.oid" size="mini" :placeholder="elinputText" style="width: 300px; margin-right:20px; margin-bottom: 0px; " class="filter-item" @keyup.enter.native="handleFilter" /></el-col>
+        <el-col :span="4"> <el-input v-model="listQuery.oid" size="mini" :placeholder="elinputText" style=" margin-right:20px; margin-bottom: 0px; " class="filter-item" @keyup.enter.native="handleFilter" /></el-col>
         <el-col :span="8"> <el-date-picker
           v-if="isHasDate"
           v-model="listQuery.dateValue"

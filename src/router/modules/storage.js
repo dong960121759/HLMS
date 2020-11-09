@@ -43,10 +43,10 @@ const storageRouter = {
       meta: { title: 'allotRequisition' }
     },
     {
-      path: 'warehouse-inout-application',
-      component: () => import('@/views/storage/warehouse-inout-application'),
-      name: 'WarehouseInOut',
-      meta: { title: 'warehouseInOut' }
+      path: 'in-application',
+      component: () => import('@/views/storage/in-application'),
+      name: 'InApplication',
+      meta: { title: 'inApplication' }
     }
   ]
 }

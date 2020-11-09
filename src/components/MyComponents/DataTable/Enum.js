@@ -62,6 +62,18 @@ const STATUS = {
       key: '01',
       val: '未完成'
     }
+  ]),
+  allot: mapIdAndKey([
+    {
+      id: 'allotting',
+      key: 'ALLOTTING',
+      val: '调拨中'
+    },
+    {
+      id: 'success',
+      key: 'SUCCESS',
+      val: '已完成'
+    }
   ])
 }
 
