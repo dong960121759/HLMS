@@ -1,4 +1,4 @@
-import { login, logout } from '@/api/user'
+import { keycloaklogin, logout } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -33,14 +33,13 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      keycloaklogin({ username: username.trim(), password: password }).then(response => {
         const { data } = response
         console.log(data)
         commit('SET_TOKEN', 'admin-token')
         setToken('admin-token')
         resolve()
       }).catch(error => {
-        console.log('11111111111111111111')
         reject(error)
       })
     })
