@@ -47,6 +47,20 @@
           </span>
         </el-form-item>
       </el-tooltip>
+
+      <el-form-item prop="deptID">
+        <span class="svg-container">
+          <svg-icon icon-class="clipboard" />
+        </span>
+        <el-select v-model="deptID" filterable placeholder="请选择">
+          <el-option
+            v-for="item in depts"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
@@ -82,7 +96,7 @@ export default {
       loginForm: {
         username: 'admin',
         password: 'admin',
-        deptID: 'admin'
+        deptID: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -92,7 +106,8 @@ export default {
       capsTooltip: false,
       loading: false,
       redirect: undefined,
-      otherQuery: {}
+      otherQuery: {},
+      depts: []
     }
   },
   watch: {
@@ -161,6 +176,9 @@ export default {
         return acc
       }, {})
     }
+    // getDepts(){
+
+    // }
     // afterQRScan() {
     //   if (e.key === 'x-admin-oauth-code') {
     //     const code = getQueryObject(e.newValue)

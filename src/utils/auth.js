@@ -13,3 +13,6 @@ export function setToken(token) {
 export function removeToken() {
   return Cookies.remove(TokenKey)
 }
+export function setLocation(location) {
+  return Cookies.set('location', location)
+}

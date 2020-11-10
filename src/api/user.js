@@ -44,3 +44,10 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getDepts() {
+  return request({
+    url: '/logistics/api/logistics/api/warehouse/getUsers',
+    method: 'get'
+  })
+}

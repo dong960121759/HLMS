@@ -1,15 +1,24 @@
 <template>
   <div class="app-container">
     <TablePage :page-config="pageConfig" :config="config" />
+    <el-dialog
+      title="领用申请单详情"
+      width="80%"
+      center
+      :close-on-click-modal="false"
+      :visible.sync="isOpenDetailed"
+    >
+      <TablePageDetailed v-if="isOpenDetailed" ref="tablePageDetailed" :oid="oid" />
+    </el-dialog>
   </div>
 </template>
 <script>
 import { fetchRecipientsLog, deleteRecipientsLog } from '@/api/article'
 import TablePage from '@/components/MyComponents/TablePage'
-
+import TablePageDetailed from './recipients-log-detailed'
 export default {
   name: '',
-  components: { TablePage },
+  components: { TablePage, TablePageDetailed },
   data() {
     return {
       config: {
@@ -33,6 +42,7 @@ export default {
         isOpenCreate: false,
         isLog: false,
         isHasDate: true,
+        isHasDelete: true,
         optionName: '新建领用申请'
       },
       isOpenDetailed: false

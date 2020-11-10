@@ -107,7 +107,7 @@ export default {
     return {
       materialCode: null,
       tableData: null,
-      listLoading: true,
+      listLoading: false,
       listQuery: {
         page: 1,
         limit: 10
@@ -115,7 +115,7 @@ export default {
     }
   },
   created() {
-    this.getList()
+    // this.getList()
   },
   methods: {
     handleFilter() {

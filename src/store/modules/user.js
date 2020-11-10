@@ -1,5 +1,5 @@
 import { keycloaklogin, logout } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, setLocation } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
@@ -30,7 +30,7 @@ const mutations = {
 
 const actions = {
   // user login
-  login({ commit }, userInfo) {
+  login({ commit }, userInfo, deptID) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       keycloaklogin({ username: username.trim(), password: password }).then(response => {
@@ -38,6 +38,7 @@ const actions = {
         console.log(data)
         commit('SET_TOKEN', 'admin-token')
         setToken('admin-token')
+        setLocation(deptID)
         resolve()
       }).catch(error => {
         reject(error)

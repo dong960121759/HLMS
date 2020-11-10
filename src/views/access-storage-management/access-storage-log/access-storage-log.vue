@@ -1,186 +1,98 @@
 <template>
   <div class="app-container">
-    <div class="filter-container" style="padding: 0px;">
-      <div class="filter-container" style="padding-top: 0px;">
-        <el-row :gutter="20">
-          <el-col :span="6"> <el-input v-model="materialCode" size="mini" placeholder="输入物资代码" style="width: 300px; margin-right:20px; margin-bottom: 0px; " class="filter-item" @keyup.enter.native="handleFilter" /></el-col>
-          <el-col :span="6"><el-button v-waves class="filter-item" size="mini" type="primary" icon="el-icon-search" style="margin-bottom: 0px; " @click="handleFilter">
-            {{ $t('table.search') }}
-          </el-button></el-col>
-          <el-col :span="6"><el-button v-waves class="filter-item" size="mini" type="danger" icon="el-icon-delete" style="margin-bottom: 0px; " @click="deleteSelect">
-            删除所选
-          </el-button></el-col>
-          <el-col :span="36"><div class="grid-content bg-purple" /></el-col>
-        </el-row>
-        <el-divider style="margin: 10px 0;" />
-      </div>
-      <div class="filter-container" style="padding-top: 0px;">
-        <DataTable ref="table" :config="config" @tableDbEdit="tableDbEdit" />
-
-        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" aria-setsize="mini" @pagination="getList" />
-      </div>
-    </div>
+    <TablePage :page-config="pageConfig" :config="config" />
+    <el-dialog
+      title="出入库申请单详情"
+      width="80%"
+      center
+      :close-on-click-modal="false"
+      :visible.sync="isOpenDetailed"
+    >
+      <access-detailed v-if="isOpenDetailed" ref="accessDetailed" />
+    </el-dialog>
   </div>
 </template>
 <script>
-import { fetchAccessStorageRequisition } from '@/api/article'
-import DataTable from '@/components/MyComponents/DataTable'
-import waves from '@/directive/waves' // waves directive
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-
+import { fetchAccessRequisition, deleteWarehouseList } from '@/api/storage'
+import TablePage from '@/components/MyComponents/TablePage'
+import AccessDetailed from './access-log-detailed.vue'
 export default {
-  name: 'AccessStorageLog',
-  components: { DataTable, Pagination },
-  directives: { waves },
+  name: '',
+  components: { TablePage, AccessDetailed },
   data() {
     return {
-      ruleForm: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      },
       config: {
         headers: [
-          { prop: 'id', name: '物资名称', attrs: { width: 200, align: 'center' }},
-          { prop: 'status', name: '物资代码', type: 'Enum', Enum: { name: 'order' }, attrs: { align: 'center' }},
-          { prop: 'author', name: '规格', attrs: { align: 'center' }},
-          { prop: 'title', name: '实际数量', type: 'Popover', attrs: { align: 'center' }}
+          { prop: 'id', name: '申请单号', attrs: { width: 200, align: 'center' }},
+          { prop: 'status', name: '出入库类型', type: 'Enum', Enum: { name: 'order' }, attrs: { align: 'center' }},
+          { prop: 'timestamp', name: '申请时间', type: 'Date', attrs: { align: 'center' }},
+          { prop: 'author', name: '申请人', attrs: { align: 'center' }},
+          { prop: 'title', name: '申请科室', type: 'Popover', attrs: { align: 'center' }}
         ].concat(this.getActions()),
         tableData: [],
-        hasCheckbox: true
+        hasCheckbox: false
       },
-      total: 0,
-      listQuery: {
-        page: 1,
-        limit: 10,
-        type: undefined,
-        sort: '+id'
+      pageConfig: {
+        total: 0,
+        listQuery: {
+          page: 1,
+          limit: 10
+        },
+        dateValue1: '',
+        isOpenCreate: false,
+        isLog: false,
+        isHasDate: false,
+        isHasDelete: true,
+        optionName: '新建入库申请单'
       },
-      options: [{
-        value: '选项1',
-        label: '采购入库'
-      }, {
-        value: '选项2',
-        label: '领用入库'
-      }, {
-        value: '选项3',
-        label: '回收入库'
-      }],
-      value: '',
-      inStorage: [],
-      materialCode: '',
-      remarks: ''
+      isOpenDetailed: false,
+      isOpenCreate: false,
+      warehouseId: '',
+      currentRow: null
     }
   },
   created() {
-    this.getList()
   },
-  methods: {
-    selectType(value) {
-      this.$alert('这是一段内容:' + value, '标题名称', {
-        confirmButtonText: '确定',
-        callback: action => {
-          this.$message({
-            type: 'info',
-            message: `action: ${action}`
-          })
-        }
-      })
-    },
-    handleFilter() {
 
-    },
-    deleteSelect() {
-      this.$confirm('此操作将删除所选, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        console.log(this.$refs.table.getChecked())
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+  methods: {
+    getListFat(listQuery) {
+      fetchAccessRequisition(listQuery).then(response => {
+        response.forEach((item, i) => {
+          item.authorities = item.authorities.join(',  ')
         })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
+        this.config.tableData = response
       })
     },
-    getList() {
-      this.loading = true
-      this.$emit('create') // for test
-      fetchAccessStorageRequisition(this.listQuery).then(response => {
-        this.config.tableData = response.data.items
-        console.log('response.data.items')
-        this.total = response.data.total
-        this.loading = false
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
-      })
-    },
-    tableDbEdit(e) {
+    handleDownload() {
+      this.isOpenCreate = true
     },
     getActions() {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
-        { label: '查看', click: data => {
-          console.log(data)
+        { id: '1', label: '查看', click: data => {
           this.isOpenDetailed = true
-        }
-        },
-        { label: '删除', click: data => {
-          this.$confirm('此操作将删除所选, 是否继续?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            console.log(this.$refs.table.getChecked())
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            })
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消删除'
-            })
-          })
+          this.warehouseId = data.id
+          console.log(this.pageConfig.isOpenDetailed)
         } }
       ] }
+    },
+    handleCurrentChange(val) {
+      this.currentRow = val
+    },
+    deleteSelect(e) {
+      console.log(e[0].id)
+      deleteWarehouseList(e[0].id).then(response => {
+        this.getListFat(this.listQuery)
+      })
     }
   }
 }
 </script>
-<style lang="scss">
-.el-divider--horizontal {
-    display: block;
-    height: 1px;
-    width: 100%;
-    margin: 10px 0;
+<style>
+ @import "../../../styles/tablebtn.scss";
+.filter-item1{
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-right:20px;
 }
-.pagination-container {
-    margin-top: 0px;
-}
-.el-select {
-    display: inline-block;
-    position: relative;
-    width: 120px;
-}
-.el-form-item__content {
-    line-height: 40px;
-    position: relative;
-    font-size: 14px;
-    margin-left: 10px;
-}
-.pagination-container[data-v-72233bcd] {
-    background: #fff;
-    padding: 32px 32px 0px 16px;
-}
+
 </style>

@@ -25,28 +25,22 @@ const storageRouter = {
       meta: { title: 'warehouse' }
     },
     {
-      path: 'print',
-      component: () => import('@/views/storage/print/TablePageDetailed'),
-      name: 'print',
-      meta: { title: 'print' }
-    },
-    {
       path: 'storage-entry',
       component: () => import('@/views/storage/storage-entry/storage-entry'),
       name: 'StorageEntry',
       meta: { title: 'storageEntry' }
     },
     {
-      path: 'allot-requisition',
-      component: () => import('@/views/storage/allot-requisition'),
-      name: 'AllotRequisition',
-      meta: { title: 'allotRequisition' }
-    },
-    {
       path: 'in-application',
       component: () => import('@/views/storage/in-application'),
       name: 'InApplication',
       meta: { title: 'inApplication' }
+    },
+    {
+      path: 'alarm-value',
+      component: () => import('@/views/storage/alarm-value'),
+      name: 'AlarmValue',
+      meta: { title: 'alarmValue' }
     }
   ]
 }

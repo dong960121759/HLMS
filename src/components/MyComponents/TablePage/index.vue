@@ -18,7 +18,7 @@
         <el-col :span="2"><el-button v-waves class="filter-item" size="mini" type="primary" icon="el-icon-search" style="margin-bottom: 0px; " @click="handleFilter">
           {{ $t('table.search') }}
         </el-button></el-col>
-        <el-col :span="2"><el-button v-waves class="filter-item" size="mini" type="danger" icon="el-icon-delete" style="margin-bottom: 0px; " @click="deleteSelect">
+        <el-col :span="2"><el-button v-if="pageConfig.isHasDelete" v-waves class="filter-item" size="mini" type="danger" icon="el-icon-delete" style="margin-bottom: 0px; " @click="deleteSelect">
           删除所选
         </el-button></el-col>
         <el-col :span="4" :offset="2" style="float: right;"> <el-button v-if="isLog" v-waves class="filter-item" size="mini" type="primary" icon="el-icon-plus" style="margin-bottom: 0px; margin-left:30px;" @click="handleDownload">

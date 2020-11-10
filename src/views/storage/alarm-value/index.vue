@@ -1,35 +1,23 @@
 <template>
   <div class="app-container">
     <TablePage :page-config="pageConfig" :config="config" />
-    <el-dialog
-      title="调拨详情"
-      width="80%"
-      center
-      :close-on-click-modal="false"
-      :visible.sync="isOpenDetailed"
-    >
-      <AllotDetailed v-if="isOpenDetailed" ref="isOpenDetailed" :warehouse-id="warehouseId" />
-    </el-dialog>
   </div>
 </template>
 <script>
-import { fetchAllotRequisition, deleteWarehouseList } from '@/api/storage'
+import { fetchWarehouseList, deleteWarehouseList } from '@/api/storage'
 import TablePage from '@/components/MyComponents/TablePage'
-// import CreateWarehouse from './create-allot'
-import AllotDetailed from './allot-log-entry'
 export default {
   name: '',
-  components: { TablePage, AllotDetailed },
+  components: { TablePage },
   data() {
     return {
       config: {
         headers: [
-          { prop: 'id', name: '调拨申请单号', attrs: { width: 200, align: 'center' }},
-          { prop: 'state', name: '状态', type: 'Enum', Enum: { name: 'allot' }, attrs: { width: 100, align: 'center' }},
-          { prop: 'warehouseOut', name: '调出仓库', attrs: { align: 'center' }},
-          { prop: 'warehouseIn', name: '调入仓库', attrs: { align: 'center' }},
-          { prop: 'applicant', name: '申请人', attrs: { align: 'center' }},
-          { prop: 'applicantTime', name: '申请时间', attrs: { align: 'center' }}
+          { prop: 'materialId', name: '物资ID', attrs: { width: 200, align: 'center' }},
+          { prop: 'materialName', name: '物资名称', attrs: { width: 200, align: 'center' }},
+          { prop: 'totalNumber', name: '规格型号', attrs: { align: 'center' }},
+          { prop: 'unlockedNumber', name: '上限', attrs: { align: 'center' }},
+          { prop: 'lastInBound', name: '下限', type: 'Date', attrs: { align: 'center' }}
         ].concat(this.getActions()),
         tableData: [],
         hasCheckbox: false
@@ -43,9 +31,9 @@ export default {
         dateValue1: '',
         isOpenCreate: false,
         isLog: false,
-        isHasDate: true,
-        isHasDelete: true,
-        optionName: '新建调拨申请'
+        isHasDate: false,
+        isHasDelete: false,
+        optionName: ''
       },
       isOpenDetailed: false,
       isOpenCreate: false,
@@ -58,7 +46,10 @@ export default {
 
   methods: {
     getListFat(listQuery) {
-      fetchAllotRequisition(listQuery).then(response => {
+      fetchWarehouseList(listQuery).then(response => {
+        response.forEach((item, i) => {
+          item.authorities = item.authorities.join(',  ')
+        })
         this.config.tableData = response
       })
     },
@@ -67,10 +58,22 @@ export default {
     },
     getActions() {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
-        { id: '1', label: '查看', click: data => {
-          this.isOpenDetailed = true
-          this.warehouseId = data.id
-          console.log(this.pageConfig.isOpenDetailed)
+        { id: '2', label: '删除', click: data => {
+          this.$confirm('是否删除' + data.name, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
         } }
       ] }
     },

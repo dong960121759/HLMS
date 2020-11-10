@@ -1,7 +1,7 @@
 export default {
   route: {
     dashboard: '首页',
-    permission: '权限测试页',
+    permission: '权限管理',
     rolePermission: '角色权限',
     pagePermission: '页面权限',
     directivePermission: '指令权限',
@@ -12,6 +12,7 @@ export default {
     warehouse: '仓库清单',
     storageEntry: '库存明细',
     inApplication: '入库申请',
+    alarmValue: '警戒值',
     requisitionManagement: '领用申请管理',
     allotProcessManagement: '调拨进程管理',
     stocktakeNoID: '盘点（无ID的普通耗材）',
@@ -31,9 +32,9 @@ export default {
     RecipientsManagement: '领用管理',
     recipientsRequisition: '领用申请',
     recipientsLog: '领用日志',
-    DepartmentManagement: '科室管理',
+    DeptManagement: '科室管理',
     requisitionRecipients: '申请领用',
-    roleManagement: '人员管理',
+    userManagement: '人员管理',
     errorPages: '错误页面',
     page401: '401',
     page404: '404'

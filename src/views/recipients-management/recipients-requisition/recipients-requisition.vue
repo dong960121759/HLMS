@@ -55,6 +55,7 @@ export default {
         dateValue1: '',
         isLog: true,
         isHasDate: true,
+        isHasDelete: true,
         optionName: '新建领用申请'
       },
       isOpenCreate: false,

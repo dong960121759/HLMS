@@ -17,12 +17,12 @@
       :close-on-click-modal="false"
       :visible.sync="isOpenDetailed"
     >
-      <AllotDetailed v-if="isOpenDetailed" ref="isOpenDetailed" :warehouse-id="warehouseId" />
+      <AllotDetailed v-if="isOpenDetailed" ref="isOpenDetailed" :row-data="rowData" />
     </el-dialog>
   </div>
 </template>
 <script>
-import { fetchWarehouseList, deleteWarehouseList } from '@/api/storage'
+import { fetchAllotRequisition, deleteWarehouseList } from '@/api/storage'
 import TablePage from '@/components/MyComponents/TablePage'
 // import CreateWarehouse from './create-allot'
 import AllotDetailed from './allot-detailed'
@@ -34,11 +34,11 @@ export default {
       config: {
         headers: [
           { prop: 'id', name: '调拨申请单号', attrs: { width: 200, align: 'center' }},
-          { prop: 'state', name: '状态', type: 'Enum', Enum: { name: 'allot' }, attrs: { width: 200, align: 'center' }},
-          { prop: 'name', name: '调出仓库', attrs: { align: 'center' }},
-          { prop: 'name', name: '调入仓库', attrs: { align: 'center' }},
-          { prop: '11111', name: '申请人', attrs: { align: 'center' }},
-          { prop: 'authorities', name: '申请时间', attrs: { align: 'center' }}
+          { prop: 'state', name: '状态', type: 'Enum', Enum: { name: 'allot' }, attrs: { width: 100, align: 'center' }},
+          { prop: 'warehouseOut', name: '调出仓库', attrs: { align: 'center' }},
+          { prop: 'warehouseIn', name: '调入仓库', attrs: { align: 'center' }},
+          { prop: 'applicant', name: '申请人', attrs: { align: 'center' }},
+          { prop: 'applicantTime', name: '申请时间', attrs: { align: 'center' }}
         ].concat(this.getActions()),
         tableData: [],
         hasCheckbox: false
@@ -53,11 +53,12 @@ export default {
         isOpenCreate: false,
         isLog: true,
         isHasDate: true,
-        optionName: '新建仓库'
+        isHasDelete: true,
+        optionName: '新建调拨申请'
       },
       isOpenDetailed: false,
       isOpenCreate: false,
-      warehouseId: '',
+      rowData: null,
       currentRow: null
     }
   },
@@ -66,10 +67,7 @@ export default {
 
   methods: {
     getListFat(listQuery) {
-      fetchWarehouseList(listQuery).then(response => {
-        response.forEach((item, i) => {
-          item.authorities = item.authorities.join(',  ')
-        })
+      fetchAllotRequisition(listQuery).then(response => {
         this.config.tableData = response
       })
     },
@@ -80,8 +78,7 @@ export default {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
         { id: '1', label: '查看', click: data => {
           this.isOpenDetailed = true
-          this.warehouseId = data.id
-          console.log(this.pageConfig.isOpenDetailed)
+          this.rowData = data
         } }
       ] }
     },

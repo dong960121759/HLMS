@@ -12,7 +12,7 @@ import allotRouter from './modules/allot'
 import stocktakeRouter from './modules/stocktake'
 import recipientsRouter from './modules/recipients'
 import accessStorageRouter from './modules/access-storage'
-
+import deptManagementRouter from './modules/dept'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -110,31 +110,32 @@ export const asyncRoutes = [
   allotRouter,
   stocktakeRouter,
   recipientsRouter,
+  deptManagementRouter,
   /** when your routing map is too long, you can split it into small modules **/
-  {
-    path: '/materials',
-    component: Layout,
-    redirect: '/materials/materials-details ',
-    name: 'Materials',
-    meta: {
-      title: 'Materials',
-      icon: 'el-icon-s-help'
-    },
-    children: [
-      {
-        path: 'materials-details',
-        component: () => import('@/views/materials/materials-details'),
-        name: 'Materialsdetails',
-        meta: { title: 'materialsDetails', icon: 'edit' }
-      },
-      {
-        path: 'materials-list',
-        component: () => import('@/views/materials/materials-list'),
-        name: 'MaterialsList',
-        meta: { title: 'materialsList', icon: 'edit' }
-      }
-    ]
-  },
+  // {
+  //   path: '/materials',
+  //   component: Layout,
+  //   redirect: '/materials/materials-details ',
+  //   name: 'Materials',
+  //   meta: {
+  //     title: 'Materials',
+  //     icon: 'el-icon-s-help'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'materials-details',
+  //       component: () => import('@/views/materials/materials-details'),
+  //       name: 'Materialsdetails',
+  //       meta: { title: 'materialsDetails', icon: 'edit' }
+  //     },
+  //     {
+  //       path: 'materials-list',
+  //       component: () => import('@/views/materials/materials-list'),
+  //       name: 'MaterialsList',
+  //       meta: { title: 'materialsList', icon: 'edit' }
+  //     }
+  //   ]
+  // },
   {
     path: '/permission',
     component: Layout,

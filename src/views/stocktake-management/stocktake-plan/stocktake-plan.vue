@@ -50,7 +50,8 @@ export default {
         isOpenCreate: false,
         isLog: true,
         isHasDate: false,
-        optionName: '新建仓库'
+        isHasDelete: true,
+        optionName: '新建盘点计划'
       },
       isOpenDetailed: false,
       isOpenCreate: false,

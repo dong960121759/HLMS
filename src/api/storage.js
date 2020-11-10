@@ -31,3 +31,28 @@ export function fetchWarehouse(warehouseId) {
     params: warehouseId
   })
 }
+// 库存明细
+export function fetchStorageEntry(query) {
+  return request({
+    url: '/logistics/api/warehouse/inventory-details',
+    method: 'get',
+    params: query
+  })
+}
+// 出入库申请
+export function fetchAccessRequisition(query) {
+  return request({
+    url: '/logistics/api/access/getAccessRequisition',
+    method: 'get',
+    params: query
+  })
+}
+
+// 调拨申请列表
+export function fetchAllotRequisition(query) {
+  return request({
+    url: '/logistics/api/allotRequisition/getAllotRequisitionList',
+    method: 'get',
+    params: query
+  })
+}

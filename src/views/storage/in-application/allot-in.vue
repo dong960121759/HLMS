@@ -9,13 +9,13 @@
         删除所选
       </el-button>
       <el-form-item label="调拨单号：" prop="region">
-        <el-input v-model="material.OrderId" style="width: 120px" />
+        <el-input v-model="material.OrderId" style="width: 110px" />
       </el-form-item>
       <el-form-item label="调出仓库：" prop="region">
-        <el-input v-model="material.supplier" style="width: 120px" />
+        <el-input v-model="material.supplier" style="width: 110px" />
       </el-form-item>
       <el-form-item label="调入仓库：" prop="region">
-        <el-input v-model="material.supplier" style="width: 120px" />
+        <el-input v-model="material.supplier" style="width: 110px" />
       </el-form-item>
     </div>
 
@@ -114,7 +114,7 @@ export default {
     return {
       materialCode: null,
       tableData: null,
-      listLoading: true,
+      listLoading: false,
       listQuery: {
         page: 1,
         limit: 10
@@ -122,7 +122,7 @@ export default {
     }
   },
   created() {
-    this.getList()
+    // this.getList()
   },
   methods: {
     handleFilter() {
