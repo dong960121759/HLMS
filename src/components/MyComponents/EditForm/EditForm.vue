@@ -16,6 +16,7 @@
 
 <script>
 import { chunk, fromEntries } from './util'
+import { number } from 'echarts/lib/export'
 // import { fromEntries } from './fromEntries'
 export default {
   components: {
@@ -45,6 +46,13 @@ export default {
       props: { value: String, list: Array },
       render(h, { props: { value = '', list = [] }, data: { attrs = {}}, listeners: { input }}) {
         return h('el-radio-group', { props: { value, ...attrs }, on: { input(v) { input(v) } }}, list.map(o => h('el-radio', { props: { ...o, key: o.label }}, [o.value])))
+      }
+    },
+    steps: {
+      functional: true,
+      props: { value: String, list: Array, active: number },
+      render(h, { props: { value = '', list = [], active = 0 }, data: { attrs = {}}, listeners: { step }}) {
+        return h('el-steps', { 'finish-status': 'success', props: { value, ...attrs, active }, active: active }, list.map(o => h('el-step', { props: { ...o, title: o.value }})))
       }
     }
   },
@@ -105,6 +113,10 @@ export default {
         image: {
           is: 'svg',
           id: 'barcode',
+          clearable: true
+        },
+        steps: {
+          is: 'steps',
           clearable: true
         }
       },

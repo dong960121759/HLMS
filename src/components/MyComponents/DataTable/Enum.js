@@ -65,14 +65,24 @@ const STATUS = {
   ]),
   allot: mapIdAndKey([
     {
-      id: 'allotting',
-      key: 'ALLOTTING',
-      val: '调拨中'
+      id: '1',
+      key: '1',
+      val: '申请调拨'
     },
     {
-      id: 'success',
-      key: 'SUCCESS',
-      val: '已完成'
+      id: '2',
+      key: '2',
+      val: '审批通过'
+    },
+    {
+      id: '3',
+      key: '3',
+      val: '已出库'
+    },
+    {
+      id: '4',
+      key: '4',
+      val: '已入库'
     }
   ])
 }

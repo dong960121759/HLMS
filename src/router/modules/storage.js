@@ -41,6 +41,12 @@ const storageRouter = {
       component: () => import('@/views/storage/alarm-value'),
       name: 'AlarmValue',
       meta: { title: 'alarmValue' }
+    },
+    {
+      path: 'print',
+      component: () => import('@/views/storage/print/TablePageDetailed'),
+      name: 'Print',
+      meta: { title: 'print' }
     }
   ]
 }
