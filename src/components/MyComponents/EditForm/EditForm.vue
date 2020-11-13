@@ -52,7 +52,7 @@ export default {
       functional: true,
       props: { value: String, list: Array, active: number },
       render(h, { props: { value = '', list = [], active = 0 }, data: { attrs = {}}, listeners: { step }}) {
-        return h('el-steps', { 'finish-status': 'success', props: { value, ...attrs, active }, active: active }, list.map(o => h('el-step', { props: { ...o, title: o.value }})))
+        return h('el-steps', { class: 'width-full', props: { value, ...attrs, active }, active: active }, list.map(o => h('el-step', { props: { ...o, title: o.value }})))
       }
     }
   },

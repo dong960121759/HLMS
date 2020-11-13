@@ -2,15 +2,6 @@
   <div class="app-container">
     <TablePage :page-config="pageConfig" :config="config" />
     <el-dialog
-      title="新建调拨申请"
-      width="80%"
-      center
-      :close-on-click-modal="false"
-      :visible.sync="isOpenCreate"
-    >
-      <CreateWarehouse v-if="isOpenCreate" ref="isOpenCreate" />
-    </el-dialog>
-    <el-dialog
       title="调拨详情"
       width="80%"
       center
@@ -25,7 +16,7 @@
 import { fetchAllotRequisition, deleteWarehouseList } from '@/api/storage'
 import TablePage from '@/components/MyComponents/TablePage'
 // import CreateWarehouse from './create-allot'
-import AllotDetailed from './allot-detailed'
+import AllotDetailed from './allot-log-detailed'
 export default {
   name: '',
   components: { TablePage, AllotDetailed },
@@ -51,7 +42,7 @@ export default {
         },
         dateValue1: '',
         isOpenCreate: false,
-        isLog: true,
+        isLog: false,
         isHasDate: true,
         isHasDelete: true,
         optionName: '新建调拨申请'
@@ -72,6 +63,7 @@ export default {
       })
     },
     handleDownload() {
+      console.log('1111111')
       this.isOpenCreate = true
     },
     getActions() {

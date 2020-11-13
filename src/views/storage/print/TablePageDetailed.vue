@@ -60,7 +60,7 @@ export default {
           { prop: 'love', label: '爱好', is: 'checkboxGroup', list: [{ label: '篮球', value: '0' }, { label: '排球', value: '1' }, { label: '足球', value: '2', disabled: true }] },
           { prop: 'delivery', label: '即时配送', is: 'switch' },
           { prop: 'qrcode', label: '二维码', is: 'image' },
-          { prop: 'stepss', label: '步骤条', is: 'steps', active: 4, list: [{ value: '申请调拨' }, { value: '审批通过' }, { value: '已出库' }, { value: '已入库' }] }
+          { prop: 'stepss', label: '步骤条', is: 'steps', active: 3, list: [{ value: '申请调拨' }, { value: '审批通过' }, { value: '已出库' }, { value: '已入库' }], 'finish-status': 'success' }
         ],
         data: {
           name: '东',

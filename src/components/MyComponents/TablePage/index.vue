@@ -83,7 +83,7 @@ export default {
       this.getList()
     },
     handleDownload() {
-      this.$parent.isOpenCreate = true
+      this.$parent.handleDownload()
     },
     getActions() {
       this.$parent.getActions()

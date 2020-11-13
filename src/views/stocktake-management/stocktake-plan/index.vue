@@ -2,34 +2,40 @@
   <div class="app-container">
     <TablePage :page-config="pageConfig" :config="config" />
     <el-dialog
-      title="调拨详情"
+      title="新建盘点"
+      width="80%"
+      center
+      :close-on-click-modal="false"
+      :visible.sync="isOpenCreate"
+    >
+      <CreateWarehouse v-if="isOpenCreate" ref="isOpenCreate" />
+    </el-dialog>
+    <el-dialog
+      title="盘点详情"
       width="80%"
       center
       :close-on-click-modal="false"
       :visible.sync="isOpenDetailed"
     >
-      <AllotDetailed v-if="isOpenDetailed" ref="isOpenDetailed" :warehouse-id="warehouseId" />
+      <WarehouseDetailed v-if="isOpenDetailed" ref="isOpenDetailed" :row-data="rowData" />
     </el-dialog>
   </div>
 </template>
 <script>
-import { fetchAllotRequisition, deleteWarehouseList } from '@/api/storage'
+import { fetchWarehouseList, deleteWarehouseList } from '@/api/storage'
 import TablePage from '@/components/MyComponents/TablePage'
-// import CreateWarehouse from './create-allot'
-import AllotDetailed from './allot-log-entry'
+
 export default {
   name: '',
-  components: { TablePage, AllotDetailed },
+  components: { TablePage },
   data() {
     return {
       config: {
         headers: [
-          { prop: 'id', name: '调拨申请单号', attrs: { width: 200, align: 'center' }},
-          { prop: 'state', name: '状态', type: 'Enum', Enum: { name: 'allot' }, attrs: { width: 100, align: 'center' }},
-          { prop: 'warehouseOut', name: '调出仓库', attrs: { align: 'center' }},
-          { prop: 'warehouseIn', name: '调入仓库', attrs: { align: 'center' }},
-          { prop: 'applicant', name: '申请人', attrs: { align: 'center' }},
-          { prop: 'applicantTime', name: '申请时间', attrs: { align: 'center' }}
+          { prop: 'id', name: '盘点计划号', attrs: { width: 200, align: 'center' }},
+          { prop: 'name', name: '盘点时间', attrs: { align: 'center' }},
+          { prop: 'admins', name: '申请人', type: 'PopoverList', attrs: { align: 'center' }},
+          { prop: 'authorities', name: '申请时间', type: 'Popover', attrs: { align: 'center' }}
         ].concat(this.getActions()),
         tableData: [],
         hasCheckbox: false
@@ -42,14 +48,14 @@ export default {
         },
         dateValue1: '',
         isOpenCreate: false,
-        isLog: false,
-        isHasDate: true,
+        isLog: true,
+        isHasDate: false,
         isHasDelete: true,
-        optionName: '新建调拨申请'
+        optionName: '新建盘点计划'
       },
       isOpenDetailed: false,
       isOpenCreate: false,
-      warehouseId: '',
+      rowData: null,
       currentRow: null
     }
   },
@@ -58,7 +64,7 @@ export default {
 
   methods: {
     getListFat(listQuery) {
-      fetchAllotRequisition(listQuery).then(response => {
+      fetchWarehouseList(listQuery).then(response => {
         this.config.tableData = response
       })
     },
@@ -69,8 +75,7 @@ export default {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
         { id: '1', label: '查看', click: data => {
           this.isOpenDetailed = true
-          this.warehouseId = data.id
-          console.log(this.pageConfig.isOpenDetailed)
+          this.rowData = data
         } }
       ] }
     },

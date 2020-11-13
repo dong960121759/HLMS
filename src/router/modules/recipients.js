@@ -14,13 +14,13 @@ const recipientsRouter = {
   children: [
     {
       path: 'recipients-requisition',
-      component: () => import('@/views/recipients-management/recipients-requisition/recipients-requisition'),
+      component: () => import('@/views/recipients-management/recipients-requisition'),
       name: 'RecipientsRequisition',
       meta: { title: 'recipientsRequisition' }
     },
     {
       path: 'recipients-log',
-      component: () => import('@/views/recipients-management/recipients-log/recipients-log'),
+      component: () => import('@/views/recipients-management/recipients-log'),
       name: 'recipientsLog',
       meta: { title: 'recipientsLog' }
     }

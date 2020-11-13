@@ -15,8 +15,6 @@ export default {
     alarmValue: '警戒值',
     requisitionManagement: '领用申请管理',
     allotProcessManagement: '调拨进程管理',
-    stocktakeNoID: '盘点（无ID的普通耗材）',
-    stocktakeIsID: '盘点（带院内编码的耗材）',
     Materials: '物资管理',
     materialsDetails: '物资管理详情',
     materialsList: '物资管理列表',

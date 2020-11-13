@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const accessStorageRouter = {
   path: '/access-storage-management',
   component: Layout,
-  redirect: '/access-storage-management/access-storage-requisition/access-storage-requisition',
+  redirect: '/access-storage-management/access-storage-requisition',
   name: 'AccessStorageManagement',
   meta: {
     title: 'AccessStorageManagement',
@@ -14,13 +14,13 @@ const accessStorageRouter = {
   children: [
     {
       path: 'access-storage-requisition',
-      component: () => import('@/views/access-storage-management/access-storage-requisition/access-storage-requisition'),
+      component: () => import('@/views/access-storage-management/access-storage-requisition'),
       name: 'AccessStorageRequisition',
       meta: { title: 'accessStorageRequisition' }
     },
     {
       path: 'recipients-log',
-      component: () => import('@/views/access-storage-management/access-storage-log/access-storage-log'),
+      component: () => import('@/views/access-storage-management/access-storage-log'),
       name: 'AccessStorageLog',
       meta: { title: 'accessStorageLog' }
     }

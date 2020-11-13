@@ -4,14 +4,13 @@
     <div class="filter-container" style="padding-top: 0px;">
       <DataTable ref="table" :config="tableConfig" />
 
-      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" aria-setsize="mini" @pagination="getMaterialsList" />
+      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" aria-setsize="mini" @pagination="getList" />
     </div>
   </div>
 </template>
 <script>
 import EditForm from '@/components/MyComponents/EditForm/EditForm'
 import DataTable from '@/components/MyComponents/DataTable'
-import Pagination from '@/components/Pagination'
 const allotStatusLlist = [
   { label: '申请调拨', value: '0' },
   { label: '审批通过', value: '1' },
@@ -20,7 +19,7 @@ const allotStatusLlist = [
 ]
 export default {
   name: 'AllotDetailed',
-  components: { EditForm, DataTable, Pagination },
+  components: { EditForm, DataTable },
   props: {
     rowData: {
       type: Object,
@@ -72,8 +71,8 @@ export default {
     getList(res) {
       console.log(res)
     },
-    getMaterialsList() {
-      console.log('news')
+    statusChange(r) {
+      console.log(r)
     }
   }
 }

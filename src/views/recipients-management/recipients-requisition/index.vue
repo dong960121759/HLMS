@@ -34,10 +34,10 @@ export default {
       config: {
         headers: [
           { prop: 'id', name: '领用申请单号', attrs: { width: 200, align: 'center' }},
-          { prop: 'title', name: '仓库', type: 'Popover', attrs: { align: 'center' }},
-          { prop: 'status', name: '状态', type: 'Enum', Enum: { name: 'order' }, attrs: { align: 'center' }},
-          { prop: 'author', name: '申请人', attrs: { align: 'center' }},
-          { prop: 'timestamp', name: '申请时间', type: 'Date', attrs: { align: 'center' }}
+          { prop: 'warehouse', name: '仓库', type: 'Popover', attrs: { align: 'center' }},
+          { prop: 'status', name: '状态', attrs: { align: 'center' }},
+          { prop: 'applicant', name: '申请人', attrs: { align: 'center' }},
+          { prop: 'applicantTime', name: '申请时间', type: 'Date', attrs: { align: 'center' }}
         ].concat(this.getActions()),
         tableData: [],
         hasCheckbox: true
@@ -69,12 +69,7 @@ export default {
   methods: {
     getListFat(listQuery) {
       fetchRecipientsRequisition(listQuery).then(response => {
-        this.config.tableData = response.data.items
-        console.log('response.data.items')
-        this.pageConfig.total = response.data.total
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
+        this.config.tableData = response
       })
     },
     getActions() {

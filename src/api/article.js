@@ -101,7 +101,7 @@ export function deleteRecipientsLog(selected) {
 // 查询领用申请
 export function fetchRecipientsRequisition(query) {
   return request({
-    url: '/vue-element-admin/article/list',
+    url: '/logistics/api/recipientsRequisition/getRecipientsRequisition',
     method: 'get',
     params: query
   })

@@ -1,26 +1,25 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddRole">
+    <el-button type="primary" size="mini" @click="handleAddRole">
       {{ $t('permission.addRole') }}
     </el-button>
-
     <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
-      <el-table-column align="center" label="Role Key" width="220">
+      <el-table-column align="center" label="角色Key" width="220">
         <template slot-scope="scope">
           {{ scope.row.key }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Role Name" width="220">
+      <el-table-column align="center" label="角色名称" width="220">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column align="header-center" label="Description">
+      <el-table-column align="header-center" label="描述">
         <template slot-scope="scope">
           {{ scope.row.description }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Operations">
+      <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope)">
             {{ $t('permission.editPermission') }}
@@ -102,13 +101,14 @@ export default {
   methods: {
     async getRoutes() {
       const res = await getRoutes()
+      console.log(res)
       this.serviceRoutes = res.data
       const routes = this.generateRoutes(res.data)
       this.routes = this.i18n(routes)
     },
     async getRoles() {
       const res = await getRoles()
-      this.rolesList = res.data
+      this.rolesList = res
     },
     i18n(routes) {
       const app = routes.map(route => {

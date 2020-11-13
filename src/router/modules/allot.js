@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const allotRouter = {
   path: '/allot-management',
   component: Layout,
-  redirect: '/allot-management/allot-requisition/allot-requisition',
+  redirect: '/allot-management/allot-requisition',
   name: 'AllotManagement',
   meta: {
     title: 'AllotManagement',
@@ -14,13 +14,13 @@ const allotRouter = {
   children: [
     {
       path: 'allot-requisition',
-      component: () => import('@/views/allot-management/allot-requisition/allot-requisition'),
+      component: () => import('@/views/allot-management/allot-requisition'),
       name: 'AllotRequisition',
       meta: { title: 'allotRequisition' }
     },
     {
       path: 'allot-log',
-      component: () => import('@/views/allot-management/allot-log/allot-log'),
+      component: () => import('@/views/allot-management/allot-log'),
       name: 'AllotLog',
       meta: { title: 'allotLog' }
     }
