@@ -13,6 +13,7 @@ import stocktakeRouter from './modules/stocktake'
 import recipientsRouter from './modules/recipients'
 import accessStorageRouter from './modules/access-storage'
 import deptManagementRouter from './modules/dept'
+import purchaseRouter from './modules/purchase'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -111,6 +112,7 @@ export const asyncRoutes = [
   stocktakeRouter,
   recipientsRouter,
   deptManagementRouter,
+  purchaseRouter,
   /** when your routing map is too long, you can split it into small modules **/
   // {
   //   path: '/materials',

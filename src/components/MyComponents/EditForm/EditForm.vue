@@ -107,6 +107,11 @@ export default {
           valueFormat: 'yyyy-MM-dd',
           editable: false
         },
+        dateMonth: {
+          is: 'el-date-picker',
+          type: 'month',
+          editable: false
+        },
         auto: {
           is: 'el-autocomplete'
         },

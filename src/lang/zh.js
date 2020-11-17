@@ -32,7 +32,11 @@ export default {
     recipientsLog: '领用日志',
     DeptManagement: '科室管理',
     requisitionRecipients: '申请领用',
+    demandPlan: '需求计划',
     userManagement: '人员管理',
+    Purchase: '采购管理',
+    deptDemandPlan: '科室需求计划总汇',
+    purchasePlan: '采购计划',
     errorPages: '错误页面',
     page401: '401',
     page404: '404'

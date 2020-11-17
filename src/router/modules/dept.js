@@ -19,11 +19,18 @@ const deptManagementRouter = {
       meta: { title: 'requisitionRecipients' }
     },
     {
+      path: 'demand-plan',
+      component: () => import('@/views/dept-management/demand-plan'),
+      name: 'DemandPlan',
+      meta: { title: 'demandPlan' }
+    },
+    {
       path: 'user-management',
       component: () => import('@/views/dept-management/user-management'),
       name: 'userManagement',
       meta: { title: 'userManagement' }
     }
+
   ]
 }
 export default deptManagementRouter

@@ -1,5 +1,23 @@
 <template>
-  <div class="app-container">
+  <div class="app-container in-container">
+    <el-select
+      v-model="value"
+      filterable
+      remote
+      size="mini"
+      style="select-kucun"
+      reserve-keyword
+      placeholder=""
+      :trigger-on-focus="true"
+    >
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      />
+    </el-select>
+    <el-divider />
     <TablePage :page-config="pageConfig" :config="config" />
   </div>
 </template>
@@ -42,7 +60,15 @@ export default {
       isOpenDetailed: false,
       isOpenCreate: false,
       warehouseId: '',
-      currentRow: null
+      currentRow: null,
+      options: [{
+        value: '选项1',
+        label: '库存1'
+      }, {
+        value: '选项2',
+        label: '库存2'
+      }],
+      value: ''
     }
   },
   created() {
@@ -77,12 +103,22 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
  @import "../../../styles/tablebtn.scss";
+ .in-container{
+.el-divider--horizontal {
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 10px 0;
+}
 .filter-item1{
   display: inline-block;
   margin-bottom: 10px;
   margin-right:20px;
 }
-
+.select-kucun{
+  display: inline;
+}
+ }
 </style>

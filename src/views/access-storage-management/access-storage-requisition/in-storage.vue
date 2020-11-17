@@ -1,6 +1,6 @@
 <template>
   <div class="app-container" style="padding-top: 0px;">
-    <div class="filter-container" style="padding: 0px;">
+    <div class="filter-container in-container" style="padding: 0px;">
       <el-form ref="ruleForm" :inline="true" :model="ruleForm" :rules="rules" size="mini" label-width="100px" class="demo-form-inline">
         <el-form-item label="入库类型：" prop="name">
           <el-select v-model="value" placeholder="入库类型" size="mini" @change="selectType(value)">
@@ -189,6 +189,7 @@ export default {
 }
 </script>
 <style lang="scss">
+.in-container{
 .el-divider--horizontal {
     display: block;
     height: 1px;
@@ -212,5 +213,6 @@ export default {
 .pagination-container[data-v-72233bcd] {
     background: #fff;
     padding: 32px 32px 0px 16px;
+}
 }
 </style>

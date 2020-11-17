@@ -30,10 +30,10 @@ export default {
         },
         dateValue1: '',
         isOpenCreate: false,
-        isLog: false,
+        isLog: true,
         isHasDate: false,
         isHasDelete: false,
-        optionName: ''
+        optionName: '新建警戒值'
       },
       isOpenDetailed: false,
       isOpenCreate: false,

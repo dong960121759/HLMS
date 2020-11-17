@@ -43,9 +43,15 @@
             />
           </el-select>
         </el-form-item>
+
         <!-- </el-col>
         </el-row> -->
       </el-form>
+      <div class="right-menu-item hover-effect">
+        <el-badge value="!" style="line-height: 1;">
+          <el-button size="mini" @click="drawer = true">消息</el-button>
+        </el-badge>
+      </div>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
@@ -69,6 +75,16 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <el-drawer
+      title="消息"
+      :visible.sync="drawer"
+      :direction="direction"
+      size="20%"
+    >
+      <el-badge is-dot class="item">
+        <span>消息1</span>
+      </el-badge>
+    </el-drawer>
   </div>
 </template>
 
@@ -99,7 +115,9 @@ export default {
       user: {
         userID: '111111',
         userName: '王小明'
-      }
+      },
+      drawer: false,
+      direction: 'rtl'
     }
   },
 
@@ -215,7 +233,7 @@ export default {
 
     .right-menu-item {
       display: inline-block;
-      padding: 0 8px;
+      padding: 0 8px 0 0;
       height: 100%;
       font-size: 18px;
       color: #5a5e66;

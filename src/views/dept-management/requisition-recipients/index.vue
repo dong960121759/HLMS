@@ -2,7 +2,7 @@
   <div class="app-container">
     <TablePage :page-config="pageConfig" :config="config" />
     <el-dialog
-      title="领用申请单详情"
+      title="申请领用详情"
       width="80%"
       center
       :close-on-click-modal="false"
@@ -11,24 +11,24 @@
       <TablePageDetailed v-if="isOpenDetailed" ref="tablePageDetailed" :oid="oid" />
     </el-dialog>
     <el-dialog
-      title="新建领用申请单"
+      title="申请领用"
       width="80%"
       center
       :close-on-click-modal="false"
       :visible.sync="isOpenCreate"
     >
-      <in-storage v-if="isOpenCreate" ref="inStorage" />
+      <CreateRequition v-if="isOpenCreate" ref="CreateRequition" />
     </el-dialog>
   </div>
 </template>
 <script>
 import { fetchRecipientsRequisition, deleteRecipientsRequisition } from '@/api/article'
 import TablePage from '@/components/MyComponents/TablePage'
-import TablePageDetailed from './requisition-recipients-detailed.vue'
-
+import TablePageDetailed from './requisition-recipients-detailed'
+import CreateRequition from './create-requestion'
 export default {
   name: '',
-  components: { TablePage, TablePageDetailed },
+  components: { TablePage, TablePageDetailed, CreateRequition },
   data() {
     return {
       config: {
@@ -79,6 +79,9 @@ export default {
           this.isOpenDetailed = true
         } }
       ] }
+    },
+    handleDownload() {
+      this.isOpenCreate = true
     },
     // 删除所选
     deleteSelect(e) {
