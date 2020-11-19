@@ -24,7 +24,7 @@
         <!-- <el-row>
           <el-col :xs="6" :sm="4" :md="4" :lg="8" :xl="10"> -->
         <el-form-item label="工号:" style="padding: 0px">
-          <el-input v-model="user.userID" disabled class="el-form-itemnew" style="padding: 0 1px;" placeholder="" />
+          <el-input v-model="userId" disabled class="el-form-itemnew" style="padding: 0 1px;" placeholder="" />
         </el-form-item>
         <!-- </el-col>
           <el-col :xs="6" :sm="4" :md="4" :lg="7" :xl="1"> -->
@@ -126,6 +126,7 @@ export default {
       'sidebar',
       'avatar',
       'name',
+      'userId',
       'device'
     ])
   },
@@ -143,7 +144,7 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
 }

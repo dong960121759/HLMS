@@ -48,7 +48,7 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-form-item prop="deptID">
+      <!-- <el-form-item prop="deptID">
         <span class="svg-container">
           <svg-icon icon-class="clipboard" />
         </span>
@@ -60,7 +60,7 @@
             :value="item.value"
           />
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
@@ -96,7 +96,7 @@ export default {
       loginForm: {
         username: 'admin',
         password: 'admin',
-        deptID: ''
+        deptID: '111'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],

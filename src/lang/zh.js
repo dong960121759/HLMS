@@ -37,6 +37,10 @@ export default {
     Purchase: '采购管理',
     deptDemandPlan: '科室需求计划总汇',
     purchasePlan: '采购计划',
+    purchaseOrder: '采购订单',
+    Dictionaries: '字典管理',
+    dnMaterial: '药品字典',
+    dnSupplier: '供应商字典',
     errorPages: '错误页面',
     page401: '401',
     page404: '404'

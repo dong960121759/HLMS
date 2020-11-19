@@ -19,10 +19,16 @@ const purchaseRouter = {
       meta: { title: 'deptDemandPlan' }
     },
     {
-      path: 'allot-log',
+      path: 'purchase-plan',
       component: () => import('@/views/purchase/purchase-plan'),
       name: 'PurchasePlan',
       meta: { title: 'purchasePlan' }
+    },
+    {
+      path: 'purchase-order',
+      component: () => import('@/views/purchase/purchase-order'),
+      name: 'purchaseOrder',
+      meta: { title: 'purchaseOrder' }
     }
   ]
 }

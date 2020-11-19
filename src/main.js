@@ -18,6 +18,7 @@ import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
 import Print from './utils/vue-print-nb/src'
+import Keycloak from 'keycloak-js'
 
 import * as filters from './filters' // global filters
 
@@ -47,10 +48,27 @@ Object.keys(filters).forEach(key => {
 
 Vue.config.productionTip = false
 
-new Vue({
-  el: '#app',
-  router,
-  store,
-  i18n,
-  render: h => h(App)
+const initOptions = {
+  url: 'http://localhost:8180/auth', realm: 'Julong', clientId: 'login-app', onLoad: 'login-required', checkLoginIframe: false
+}
+
+const keycloak = Keycloak(initOptions)
+
+keycloak.init({ onLoad: initOptions.onLoad }).then((auth) => {
+  if (!auth) {
+    window.location.reload()
+  } else {
+    console.info('Authenticated')
+
+    new Vue({
+      el: '#app',
+      router,
+      store,
+      i18n,
+      render: h => h(App, { props: { keycloak: keycloak }})
+    })
+  }
 })
+console.log(keycloak)
+export { keycloak }
+store.dispatch('user/keycloakLogin')
