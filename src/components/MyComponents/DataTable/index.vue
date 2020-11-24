@@ -7,9 +7,10 @@
     highlight-current-row
     v-on="cfg.on"
     @current-change="handleCurrentChange"
-    @row-dblclick="tableDbEdit"
+    @row-dblclick="config.tableDbEdit"
   >
-    <el-table-column v-if="cfg.hasCheckbox" type="selection" width="55" label="xx" />
+    <el-table-column v-if="cfg.hasCheckbox" type="selection" width="40" label="xx" />
+    <el-table-column v-if="cfg.hasIndex" type="index" width="50" align="center" label="序号" />
     <el-table-column v-for="n in cfg.headers" :key="n.prop" :prop="n.prop" :label="n.name" v-bind="{...columnAttrs, ...n.attrs}">
       <template slot-scope="{row}">
         <Cell :config="n" :data="row" />
@@ -67,9 +68,7 @@ export default {
     getChecked() {
       return this.checked
     },
-    tableDbEdit() {
-      this.$emit(`tableDbEdit`, this.checked)
-    },
+
     handleCurrentChange(val) {
       console.log(val)
       this.$emit(`handleCurrentChange`, val)
@@ -77,3 +76,17 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.btn2{
+    padding: 7px 10px;
+    min-width: 60px;
+    margin-left: 10px;
+    color: #FFFFFF;
+    background-color: #ff4949;
+    border-color: #ff4949;
+}
+// 解决纵向边框错位问题
+.el-table th.gutter{
+    display: table-cell!important;
+}
+</style>

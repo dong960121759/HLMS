@@ -32,7 +32,9 @@ export default {
           { prop: 'applicantTime', name: '申请时间', attrs: { align: 'center' }}
         ].concat(this.getActions()),
         tableData: [],
-        hasCheckbox: false
+        hasCheckbox: false,
+        hasIndex: false,
+        tableDbEdit: this.tableDbEdit
       },
       pageConfig: {
         total: 0,
@@ -82,6 +84,11 @@ export default {
       deleteWarehouseList(e[0].id).then(response => {
         this.getListFat(this.listQuery)
       })
+    },
+    // 双击效果
+    tableDbEdit(checked) {
+      console.log('tableDbEdit')
+      console.log(checked)
     }
   }
 }

@@ -40,7 +40,9 @@ export default {
           { prop: 'lastOutBound', name: '最近一次出库时间', attrs: { align: 'center' }}
         ],
         tableData: [],
-        hasCheckbox: false
+        hasCheckbox: false,
+        hasIndex: false,
+        tableDbEdit: this.tableDbEdit
       },
       pageConfig: {
         total: 0,
@@ -99,6 +101,11 @@ export default {
     },
     deleteSelect(e) {
 
+    },
+    // 双击效果
+    tableDbEdit(checked) {
+      console.log('tableDbEdit')
+      console.log(checked)
     }
   }
 }

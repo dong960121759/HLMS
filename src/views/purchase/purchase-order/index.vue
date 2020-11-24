@@ -7,20 +7,48 @@ export default {
   components: {
     NewTablePage
   },
+  inject: ['reload'], // 注入
   data() {
     return {
       buttons: [
         {
-          label: '新建',
-          icon: '',
+          label: '刷新',
+          icon: 'el-icon-refresh',
           type: '',
-          click: this.create
+          plain: true,
+          click: this.refresh
+        },
+        {
+          label: '查询',
+          icon: 'el-icon-search',
+          type: 'warning',
+          plain: true,
+          click: this.getList
+
+        },
+        {
+          label: '提交',
+          icon: 'el-icon-check',
+          type: 'success',
+          plain: true,
+          click: this.getAction
+
+        },
+        {
+          label: '删除',
+          icon: 'el-icon-delete',
+          type: 'danger',
+          plain: true,
+          click: this.getList
 
         }
       ],
       configForm: {
         columns: [
           { prop: 'id', label: '申请单号', disabled: true },
+          { prop: 'planData', label: '计划年月', is: 'dateMonth' },
+          { prop: 'planData', label: '计划年月', is: 'dateMonth' },
+          { prop: 'planData', label: '计划年月', is: 'dateMonth' },
           { prop: 'planData', label: '计划年月', is: 'dateMonth' }
         ],
         data: {
@@ -37,28 +65,43 @@ export default {
           { prop: 'name', name: '材料名称', attrs: { align: 'center' }},
           { prop: 'standards', name: '规格', attrs: { align: 'center' }}
         ].concat(this.getAction()),
-        tableData: [{ id: '11111', name: 'aaaaaa', standards: 'vsfafa' },
-          { id: '11111', name: 'aaaaaa', standards: 'vsfafa' },
-          { id: '11111', name: 'aaaaaa', standards: 'vsfafa' }
+        tableData: [{ id: '1', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '2', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '3', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '4', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '5', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '6', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '7', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '8', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '9', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '10', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '11', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '12', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '13', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '14', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '15', name: 'aaaaaa', standards: 'vsfafa' },
+          { id: '16', name: 'aaaaaa', standards: 'vsfafa' }
 
         ],
-        hasCheckbox: true
+        hasCheckbox: true,
+        hasIndex: false,
+        tableDbEdit: this.tableDbEdit
       },
       configPage: {
-        total: 0,
+        total: 16,
         listQuery: {
           page: 1,
           limit: 10
         },
-        getList: this.getLists
+        getList: this.getList
 
       }
 
     }
   },
   methods: {
-    getLists() {
-
+    getList() {
+      console.log('getList')
     },
     create() {
       console.log('create')
@@ -70,11 +113,16 @@ export default {
         } },
         { id: '2', label: '删除', click: data => {
           console.log('删除')
-        } },
-        { id: '3', label: '警告', type: 'warning', click: data => {
-          console.log('警告')
         } }
       ] }
+    },
+    // 双击效果
+    tableDbEdit(checked) {
+      console.log('tableDbEdit')
+      console.log(checked)
+    },
+    refresh() {
+      this.reload() // 局部刷新
     }
   }
 }

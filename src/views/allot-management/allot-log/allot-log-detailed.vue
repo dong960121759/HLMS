@@ -52,7 +52,9 @@ export default {
           { prop: 'title', name: '调拨数量', type: 'Popover', attrs: { align: 'center' }}
         ],
         tableData: [],
-        hasCheckbox: true
+        hasCheckbox: true,
+        hasIndex: false,
+        tableDbEdit: this.tableDbEdit
       },
       total: 0,
       listQuery: {
@@ -73,6 +75,11 @@ export default {
     },
     statusChange(r) {
       console.log(r)
+    },
+    // 双击效果
+    tableDbEdit(checked) {
+      console.log('tableDbEdit')
+      console.log(checked)
     }
   }
 }

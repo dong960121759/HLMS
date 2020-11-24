@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="printMe" ref="printContent">
+    <div id="printMe" ref="printContent" class="printMe1">
       <EditForm ref="form" :config="config" @submit="getList" />
     </div>
     <el-button type="primary" @click="toImg">转图片打印</el-button>
@@ -35,6 +35,7 @@ export default {
 
     return {
       img: '',
+      aa: [1, 2, 3],
       printObj: {
         id: 'printMe',
         popTitle: '打印',
@@ -73,7 +74,7 @@ export default {
   },
   methods: {
     querySearch(q, cb) {
-      if (!q) { cb([]); return }
+      if (!q) { cb(this.aa); return }
     },
     getList(res) {
       console.log(res)
@@ -101,7 +102,8 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
+.printMe1{
 .content {
   width: 300px;
   border: 1px solid #000;
@@ -111,5 +113,6 @@ export default {
 }
 .content li {
   padding: 10px 0;
+}
 }
 </style>

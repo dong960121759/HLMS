@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="printMe" ref="printContent">
+    <div id="printMe" ref="printContent" class="printMe">
       <EditForm ref="form" :config="config" @submit="getList" />
     </div>
     <el-button v-print="printObj" type="primary">直接打印</el-button>
@@ -34,6 +34,18 @@ export default {
 
     return {
       img: '',
+      aa: [
+        {
+          'value': 'aaa',
+          'gg': '123',
+          'lop': 3829
+        },
+        {
+          'value': 'bbb',
+          'jj': 'yuuhs',
+          'gg': 'ssxa'
+        }
+      ],
       printObj: {
         id: 'printMe',
         popTitle: '打印',
@@ -89,7 +101,8 @@ export default {
 
   methods: {
     querySearch(q, cb) {
-      if (!q) { cb([]); return }
+      console.log('aaaaaaaaa')
+      if (!q) { cb(this.aa); return }
     },
     getList(res) {
       console.log(res)
@@ -117,7 +130,8 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
+.printMe {
 .content {
   width: 300px;
   border: 1px solid #000;
@@ -128,12 +142,13 @@ export default {
 .content li {
   padding: 10px 0;
 }
-.width-full .el-input__inner {
+.el-input__inner {
    border-left:0px;
    border-top:0px;
    border-right:0px;
 }
-.width-full .el-textarea__inner {
+.el-textarea__inner {
    border: 0px;
+}
 }
 </style>

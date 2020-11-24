@@ -30,7 +30,9 @@ export default {
           { prop: 'title', name: '申请科室', type: 'Popover', attrs: { align: 'center' }}
         ].concat(this.getActions()),
         tableData: [],
-        hasCheckbox: false
+        hasCheckbox: false,
+        hasIndex: false,
+        tableDbEdit: this.tableDbEdit
       },
       pageConfig: {
         total: 0,
@@ -83,6 +85,11 @@ export default {
       deleteWarehouseList(e[0].id).then(response => {
         this.getListFat(this.listQuery)
       })
+    },
+    // 双击效果
+    tableDbEdit(checked) {
+      console.log('tableDbEdit')
+      console.log(checked)
     }
   }
 }

@@ -31,7 +31,7 @@ export default {
       functional: true,
       props: { value: Boolean, label: String },
       render(h, { props: { value = '', label = '' }, data: { attrs = {}}, listeners: { input }}) {
-        return h('el-checkbox', { props: { value, ...attrs }, on: { change(v) { input(v) } }}, label)
+        return h('el-checkbox', { props: { value, ...attrs }, on: { change(v) { input(v) } }})
       }
     },
     checkboxGroup: {
@@ -172,10 +172,10 @@ export default {
 </script>
 
 <style scoped>
-.width-full{
+/* .width-full{
   width: 80%;
   border: 0px;
-}
+} */
 .searchBtn{
   text-align: center;
 }

@@ -26,7 +26,7 @@
         </el-button></el-col>
       </el-row>
     </div>
-    <DataTable ref="table" :config="config" @tableDbEdit="tableDbEdit" />
+    <DataTable ref="table" :config="config" />
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
   </div>
 </template>

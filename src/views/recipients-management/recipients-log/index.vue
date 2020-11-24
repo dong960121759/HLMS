@@ -30,7 +30,9 @@ export default {
           { prop: 'timestamp', name: '申请时间', type: 'Date', attrs: { align: 'center' }}
         ].concat(this.getActions()),
         tableData: [],
-        hasCheckbox: true
+        hasCheckbox: true,
+        hasIndex: false,
+        tableDbEdit: this.tableDbEdit
       },
       pageConfig: {
         total: 0,
@@ -85,6 +87,11 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
+    },
+    // 双击效果
+    tableDbEdit(checked) {
+      console.log('tableDbEdit')
+      console.log(checked)
     }
   }
 }

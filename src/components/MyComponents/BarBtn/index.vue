@@ -6,6 +6,9 @@
       :type="btn.type ? btn.type:'primary'"
       :icon="btn.icon"
       :size="btn.size?btn.size:'mini'"
+      :round="btn.round"
+      :circle="btn.circle"
+      :plain="btn.plain"
       @click="btn.click"
     >{{ btn.label }}</el-button>
   </el-button-group>

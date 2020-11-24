@@ -81,7 +81,9 @@ export default {
           { prop: 'title', name: '实际数量', type: 'Popover', attrs: { align: 'center' }}
         ],
         tableData: [],
-        hasCheckbox: true
+        hasCheckbox: true,
+        hasIndex: false,
+        tableDbEdit: this.tableDbEdit
       },
       total: 0,
       listQuery: {
@@ -163,6 +165,11 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
+    },
+    // 双击效果
+    tableDbEdit(checked) {
+      console.log('tableDbEdit')
+      console.log(checked)
     }
   }
 }

@@ -15,6 +15,7 @@ import accessStorageRouter from './modules/access-storage'
 import deptManagementRouter from './modules/dept'
 import purchaseRouter from './modules/purchase'
 import dictionariesRouter from './modules/dictionaries'
+import financeRouter from './modules/finance'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -114,6 +115,7 @@ export const asyncRoutes = [
   stocktakeRouter,
   recipientsRouter,
   deptManagementRouter,
+  financeRouter,
   purchaseRouter,
   dictionariesRouter,
   /** when your routing map is too long, you can split it into small modules **/

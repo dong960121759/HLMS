@@ -13,6 +13,12 @@ const purchaseRouter = {
   },
   children: [
     {
+      path: 'dept-demand-examine',
+      component: () => import('@/views/purchase/dept-demand-examine'),
+      name: 'DeptDemandExamine',
+      meta: { title: 'deptDemandExamine' }
+    },
+    {
       path: 'dept-demand-plan',
       component: () => import('@/views/purchase/dept-demand-plan'),
       name: 'DeptDemandPlan',

@@ -1,11 +1,11 @@
 <template>
   <div class="app-container bar-btn" style="padding-top: 5px;">
     <div class="bar-container">
-      <BarBtn :buttons="buttons" />
+      <EditForm ref="form" :config="configForm" />
     </div>
     <el-divider />
     <div class="bar-container">
-      <EditForm ref="form" :config="configForm" />
+      <BarBtn :buttons="buttons" />
     </div>
     <el-divider />
     <DataTable ref="table" :config="configTable" />

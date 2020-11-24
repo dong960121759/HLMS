@@ -80,7 +80,9 @@ export default {
           { prop: 'title', name: '实际数量', type: 'Popover', attrs: { align: 'center' }}
         ].concat(this.getActions()),
         tableData: [],
-        hasCheckbox: true
+        hasCheckbox: true,
+        hasIndex: false,
+        tableDbEdit: this.tableDbEdit
       },
       total: 0,
       listQuery: {
@@ -107,6 +109,11 @@ export default {
           this.isOpenDetailed = true
         } }
       ] }
+    },
+    // 双击效果
+    tableDbEdit(checked) {
+      console.log('tableDbEdit')
+      console.log(checked)
     }
 
   }

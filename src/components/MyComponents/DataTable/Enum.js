@@ -63,6 +63,18 @@ const STATUS = {
       val: '未完成'
     }
   ]),
+  whether: mapIdAndKey([
+    {
+      id: '1',
+      key: '1',
+      val: '是'
+    },
+    {
+      id: '0',
+      key: '0',
+      val: '否'
+    }
+  ]),
   allot: mapIdAndKey([
     {
       id: '0',

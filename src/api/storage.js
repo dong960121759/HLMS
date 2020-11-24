@@ -1,3 +1,4 @@
+// 仓库管理地址
 import request from '@/utils/request'
 // 获取仓库清单
 export function fetchWarehouseList(query) {

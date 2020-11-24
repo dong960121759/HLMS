@@ -19,10 +19,10 @@ import './permission' // permission control
 import './utils/error-log' // error log
 import Print from './utils/vue-print-nb/src'
 import Keycloak from 'keycloak-js'
-
 import * as filters from './filters' // global filters
 
 Vue.use(Print)
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
