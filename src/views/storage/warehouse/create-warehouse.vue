@@ -152,9 +152,10 @@ export default {
     },
     getAdmin() {
       getUsers().then(response => {
+        console.log(response)
         this.states = response.admins
         this.list = this.states.map(item => {
-          return { value: `${item.userID}`, label: `${item.userID},` + `${item.userName}` }
+          return { value: `${item.id}`, label: `${item.id},` + `${item.name}` }
         })
         this.options = this.list
       })

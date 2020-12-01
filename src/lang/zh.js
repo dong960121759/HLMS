@@ -40,7 +40,7 @@ export default {
     Purchase: '采购管理',
     deptDemandExamine: '科室需求计划审核',
     deptDemandPlan: '科室需求计划总汇',
-    purchasePlan: '采购计划',
+    orderPlan: '订单计划',
     purchaseOrder: '采购订单',
     Dictionaries: '字典管理',
     dnMaterial: '药品字典',

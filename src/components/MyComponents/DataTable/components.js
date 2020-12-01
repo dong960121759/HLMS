@@ -5,7 +5,7 @@ import Enum from './Enum'
 import Action from './Action'
 import Popover from './Popover'
 import PopoverList from './Popover-list'
-
+import InlineEdit from './Inline-edit'
 export {
   Default,
   Date,
@@ -13,5 +13,6 @@ export {
   Enum,
   Action,
   Popover,
-  PopoverList
+  PopoverList,
+  InlineEdit
 }

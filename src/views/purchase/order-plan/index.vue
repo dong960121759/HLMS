@@ -1,14 +1,21 @@
+// 订单计划
 <template>
-  <NewTablePage :buttons="buttons" :config-form="configForm" :config-table="configTable" :config-page="configPage" />
+  <NewTablePage :buttons="buttons" :config-table="configTable" :config-form="configForm" :config-page="configPage" />
 </template>
 <script>
 import NewTablePage from '@/components/MyComponents/NewTablePage'
-import { fetchpurchaseOrderList } from '@/api/purchase'
+import { fetchOrderPlanList } from '@/api/purchase'
+
+const statusLlist = [
+  { label: '未提交', value: '0' },
+  { label: '待审批', value: '1' },
+  { label: '已通过', value: '2', disabled: true }
+]
 export default {
   components: {
     NewTablePage
   },
-  inject: ['reload'], // 注入
+  inject: ['reload'],
   data() {
     return {
       buttons: [
@@ -28,23 +35,27 @@ export default {
 
         },
         {
-          label: '确认收货',
+          label: '提交',
           icon: 'el-icon-check',
           type: 'success',
           plain: true,
-          click: this.confirmReceipt
-
+          click: this.submit
         }
       ],
       configForm: {
         columns: [
-          { prop: 'id', label: '申请单号', disabled: true },
-          { prop: 'planData', label: '单据日期', is: 'daterange' }
-
+          { prop: 'id', label: '材料编号' },
+          { prop: 'name', label: '材料名称' },
+          { prop: 'state', label: '审核状态', is: 'select', list: statusLlist },
+          { prop: 'date', label: '提交日期', is: 'daterange' },
+          { prop: 'weh', label: '紧急', is: 'checkbox' }
         ],
         data: {
           id: '',
-          planData: undefined
+          name: '',
+          state: null,
+          date: undefined,
+          weh: undefined
         },
         rowSize: 3,
         submitname: '',
@@ -52,54 +63,56 @@ export default {
       },
       configTable: {
         headers: [
-          { prop: 'id', name: '单据编号', attrs: { width: 150, align: 'center' }},
-          { prop: 'string4', name: '订单计划号', attrs: { align: 'center' }},
-          { prop: 'string1', name: '应收款单位', attrs: { align: 'center' }},
-          { prop: 'string2', name: '合计金额', attrs: { width: 150, align: 'center' }},
-          { prop: 'date', name: '单据时间', type: 'Date', format: 'yyyy-MM-DD', attrs: { align: 'center' }},
-          { prop: 'name', name: '操作员', attrs: { align: 'center' }},
+          { prop: 'id', name: '订单计划号', attrs: { width: 120, align: 'center' }},
+          { prop: 'id2', name: '材料号', attrs: { width: 120, align: 'center' }},
+          { prop: 'string1', name: '材料名称', attrs: { align: 'center' }},
+          { prop: 'number1', name: '应付金额', attrs: { align: 'center' }},
+          { prop: 'string2', name: '供应商', attrs: { align: 'center' }},
           { prop: 'enum1', name: '状态', attrs: { align: 'center' }},
+          { prop: 'date', name: '提交日期', type: 'Date', format: 'yyyy-MM-DD', attrs: { align: 'center' }},
           { prop: 'string3', name: '备注', type: 'Popover', attrs: { align: 'center' }}
-
         ].concat(this.getAction()),
         tableData: [],
         hasCheckbox: true,
-        hasIndex: false,
+        hasIndex: true,
         tableDbEdit: this.tableDbEdit
       },
       configPage: {
         total: 16,
         listQuery: {
           page: 1,
-          limit: 10
+          limit: 10,
+          query: null
         },
         getList: this.getList
 
       }
-
     }
   },
   created() {
     this.getList()
   },
   methods: {
+    refresh() {
+      this.reload()
+    },
+    // 提交
+    submit() {
+      console.log('submit')
+    },
     getList() {
       console.log('getList')
       if (this.configForm.data !== null) {
         this.configPage.listQuery.query = this.configForm.data
       }
-      console.log(this.configPage.listQuery.query)
-      fetchpurchaseOrderList(this.configPage.listQuery).then(response => {
+      fetchOrderPlanList(this.configPage.listQuery).then(response => {
         console.log(response)
         this.configTable.tableData = response
       })
     },
-    confirmReceipt() {
-      console.log('confirmReceipt')
-    },
     getAction() {
-      return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
-        { id: '1', label: '查看', click: data => {
+      return { prop: 'action', name: '操作', type: 'Action', attrs: { width: 120, align: 'center' }, value: [
+        { id: '1', label: '查看详情', click: data => {
           console.log('查看')
         } }
       ] }
@@ -108,9 +121,6 @@ export default {
     tableDbEdit(checked) {
       console.log('tableDbEdit')
       console.log(checked)
-    },
-    refresh() {
-      this.reload() // 局部刷新
     }
   }
 }

@@ -9,6 +9,7 @@
       :round="btn.round"
       :circle="btn.circle"
       :plain="btn.plain"
+      :disabled="btn.disabled"
       @click="btn.click"
     >{{ btn.label }}</el-button>
   </el-button-group>

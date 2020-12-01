@@ -25,10 +25,10 @@ const purchaseRouter = {
       meta: { title: 'deptDemandPlan' }
     },
     {
-      path: 'purchase-plan',
-      component: () => import('@/views/purchase/purchase-plan'),
-      name: 'PurchasePlan',
-      meta: { title: 'purchasePlan' }
+      path: 'order-plan',
+      component: () => import('@/views/purchase/order-plan'),
+      name: 'OrderPlan',
+      meta: { title: 'orderPlan' }
     },
     {
       path: 'purchase-order',

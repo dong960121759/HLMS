@@ -56,7 +56,7 @@ export default {
           payData: undefined
         },
         rowSize: 2,
-        subimtname: '',
+        submitname: '',
         footer: false
       },
       configTable: {

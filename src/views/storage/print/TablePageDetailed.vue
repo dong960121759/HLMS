@@ -105,6 +105,7 @@ export default {
       if (!q) { cb(this.aa); return }
     },
     getList(res) {
+      console.log('res')
       console.log(res)
     },
     statusChange(r) {

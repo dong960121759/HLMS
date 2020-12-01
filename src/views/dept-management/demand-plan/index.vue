@@ -1,14 +1,30 @@
-// 应付款项
+// 科室需求计划
 <template>
-  <NewTablePage :buttons="buttons" :config-form="configForm" :config-table="configTable" :config-page="configPage" />
+  <div>
+    <NewTablePage :buttons="buttons" :config-form="configForm" :config-table="configTable" :config-page="configPage" />
+    <el-dialog
+      :key="refreshval"
+      title="需求计划详情"
+      width="80%"
+      top="3%"
+      center
+      :close-on-click-modal="false"
+      :visible.sync="isOpenDetailed"
+    >
+      <DemandDetailed v-if="isOpenDetailed" ref="isOpenDetailed" :row-data="rowData" />
+    </el-dialog>
+  </div>
 </template>
 <script>
 import NewTablePage from '@/components/MyComponents/NewTablePage'
-import { fetchPayableList } from '@/api/finance'
+import { fetchDeptDemandPlanList } from '@/api/dept'
+import DemandDetailed from './demand-plan-detailed'
 export default {
   components: {
-    NewTablePage
+    NewTablePage,
+    DemandDetailed
   },
+
   inject: ['reload'], // 注入
   data() {
     return {
@@ -21,11 +37,11 @@ export default {
           click: this.refresh
         },
         {
-          label: '驳回',
-          icon: 'el-icon-check',
-          type: 'danger',
+          label: '新增',
+          icon: 'el-icon-plus',
+          type: '',
           plain: true,
-          click: this.reject
+          click: this.create
 
         },
         {
@@ -37,17 +53,26 @@ export default {
 
         },
         {
-          label: '付款',
+          label: '删除',
+          icon: 'el-icon-close',
+          type: 'danger',
+          plain: true,
+          click: this.delete
+
+        },
+        {
+          label: '保存',
           icon: 'el-icon-check',
           type: 'success',
           plain: true,
+          disabled: false,
           click: this.save
 
         }
       ],
       configForm: {
         columns: [
-          { prop: 'id', label: '订单需求号' },
+          { prop: 'id', label: '需求计划号' },
           { prop: 'dept', label: '请购部门' },
           { prop: 'name', label: '请购人员' },
           { prop: 'payDate', label: '计划年月', is: 'dateMonth' },
@@ -62,7 +87,7 @@ export default {
           date: undefined
         },
         rowSize: 3,
-        subimtname: '',
+        submitname: '',
         footer: false
       },
       configTable: {
@@ -91,8 +116,10 @@ export default {
         },
         getList: this.getList
 
-      }
-
+      },
+      isOpenDetailed: false,
+      refreshval: 0,
+      rowData: null
     }
   },
   created() {
@@ -105,7 +132,7 @@ export default {
         this.configPage.listQuery.query = this.configForm.data
       }
       console.log(this.configPage.listQuery.query)
-      fetchPayableList(this.configPage.listQuery).then(response => {
+      fetchDeptDemandPlanList(this.configPage.listQuery).then(response => {
         console.log(response)
         this.configTable.tableData = response
       })
@@ -114,9 +141,14 @@ export default {
     refresh() {
       this.reload() // 局部刷新
     },
-    // 驳回
-    reject() {
-      console.log('reject')
+    // 新增
+    create() {
+      console.log('create')
+      this.rowData = null
+      this.isOpenDetailed = true
+    },
+    delete() {
+      console.log('delete')
     },
     // 保存
     save() {
@@ -126,6 +158,8 @@ export default {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { width: 150, align: 'center' }, value: [
         { id: '1', label: '查看', click: data => {
           console.log('查看')
+          this.isOpenDetailed = true
+          this.rowData = data
         } }
       ] }
     },
@@ -133,6 +167,8 @@ export default {
     tableDbEdit(checked) {
       console.log('tableDbEdit')
       console.log(checked)
+      this.isOpenDetailed = true
+      this.rowData = checked
     }
   }
 }

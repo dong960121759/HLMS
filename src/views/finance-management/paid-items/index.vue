@@ -56,7 +56,7 @@ export default {
           payData: undefined
         },
         rowSize: 2,
-        subimtname: '',
+        submitname: '',
         footer: false
       },
       configTable: {
@@ -65,7 +65,7 @@ export default {
           { prop: 'id2', name: '订单计划号', attrs: { width: 150, align: 'center' }},
           { prop: 'string1', name: '收款单位', attrs: { align: 'center' }},
           { prop: 'number1', name: '合计金额', type: 'Currency', attrs: { align: 'center' }},
-          { prop: 'dateTime', name: '单据时间', type: 'Date', attrs: { width: 150, align: 'center' }},
+          { prop: 'dateTime', name: '单据时间', type: 'Date', format: 'yyyy-MM-DD', attrs: { width: 150, align: 'center' }},
           { prop: 'name', name: '付款人', attrs: { align: 'center' }},
           { prop: 'string2', name: '付款方式', attrs: { align: 'center' }},
           { prop: 'enum1', name: '付款状态', attrs: { align: 'center' }},

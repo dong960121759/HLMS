@@ -1,13 +1,28 @@
 // 科室需求计划审核
 <template>
-  <NewTablePage :buttons="buttons" :config-form="configForm" :config-table="configTable" :config-page="configPage" />
+  <div>
+    <NewTablePage :buttons="buttons" :config-form="configForm" :config-table="configTable" :config-page="configPage" />
+    <el-dialog
+      :key="refreshval"
+      title="需求计划详情"
+      width="80%"
+      top="3%"
+      center
+      :close-on-click-modal="false"
+      :visible.sync="isOpenDetailed"
+    >
+      <DemandExamine v-if="isOpenDetailed" ref="isOpenDetailed" :row-data="rowData" />
+    </el-dialog>
+  </div>
 </template>
 <script>
 import NewTablePage from '@/components/MyComponents/NewTablePage'
-import { fetchPaidList } from '@/api/finance'
+import { fetchDemandExamineList } from '@/api/purchase'
+import DemandExamine from './demand-examine'
 export default {
   components: {
-    NewTablePage
+    NewTablePage,
+    DemandExamine
   },
   inject: ['reload'], // 注入
   data() {
@@ -61,20 +76,20 @@ export default {
           whetherboolen: false
         },
         rowSize: 3,
-        subimtname: '',
+        submitname: '',
         footer: false
       },
       configTable: {
         headers: [
-          { prop: 'id', name: '票据编号', attrs: { width: 150, align: 'center' }},
-          { prop: 'id2', name: '订单计划号', attrs: { width: 150, align: 'center' }},
-          { prop: 'string1', name: '收款单位', attrs: { align: 'center' }},
-          { prop: 'number1', name: '合计金额', type: 'Currency', attrs: { align: 'center' }},
-          { prop: 'dateTime', name: '单据时间', type: 'Date', attrs: { width: 150, align: 'center' }},
-          { prop: 'name', name: '付款人', attrs: { align: 'center' }},
-          { prop: 'string2', name: '付款方式', attrs: { align: 'center' }},
-          { prop: 'enum1', name: '付款状态', attrs: { align: 'center' }},
-          { prop: 'string3', name: '备注', attrs: { align: 'center' }}
+          { prop: 'id', name: '需求计划号', attrs: { width: 150, align: 'center' }},
+          { prop: 'string1', name: '请购部门', attrs: { align: 'center' }},
+          { prop: 'name', name: '请购人员', attrs: { align: 'center' }},
+          { prop: 'dateMonth', name: '计划年月', type: 'Date', format: 'yyyy-MM', attrs: { width: 150, align: 'center' }},
+          { prop: 'enum1', name: '状态', attrs: { align: 'center' }},
+          { prop: 'whether', name: '是否紧急', type: 'Enum', Enum: { name: 'whether' }, attrs: { width: 50, align: 'center' }},
+          { prop: 'date', name: '需求日期', type: 'Date', format: 'yyyy-MM-DD', attrs: { align: 'center' }},
+          { prop: 'string3', name: '备注', type: 'Popover', attrs: { align: 'center' }},
+          { prop: 'string4', name: '审核意见', type: 'Popover', attrs: { align: 'center' }}
 
         ].concat(this.getAction()),
         tableData: [],
@@ -91,8 +106,10 @@ export default {
         },
         getList: this.getList
 
-      }
-
+      },
+      isOpenDetailed: false,
+      refreshval: 0,
+      rowData: null
     }
   },
   created() {
@@ -104,8 +121,7 @@ export default {
       if (this.configForm.data !== null) {
         this.configPage.listQuery.query = this.configForm.data
       }
-      console.log(this.configPage.listQuery.query)
-      fetchPaidList(this.configPage.listQuery).then(response => {
+      fetchDemandExamineList(this.configPage.listQuery).then(response => {
         console.log(response)
         this.configTable.tableData = response
       })
@@ -123,9 +139,11 @@ export default {
       console.log('examinePass')
     },
     getAction() {
-      return { prop: 'action', name: '操作', type: 'Action', attrs: { align: 'center' }, value: [
+      return { prop: 'action', name: '操作', type: 'Action', attrs: { width: 120, align: 'center' }, value: [
         { id: '1', label: '查看详情', click: data => {
           console.log('查看')
+          this.isOpenDetailed = true
+          this.rowData = data
         } }
       ] }
     },
@@ -133,6 +151,8 @@ export default {
     tableDbEdit(checked) {
       console.log('tableDbEdit')
       console.log(checked)
+      this.isOpenDetailed = true
+      this.rowData = checked
     }
   }
 }

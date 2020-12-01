@@ -149,7 +149,7 @@ export default {
     componentAttrs(item) {
       const { is = 'text', label } = item
       const attrs = fromEntries(Object.entries(item).filter(n => !/^(prop|is|rules)/.test(n[0])))
-      const placeholder = (/^(select|el-date-picker)/.test(is) ? '选择' : '输入/搜索') + label
+      const placeholder = (/^(select|el-date-picker)/.test(is) ? '选择' : '输入') + label
       return { ...attrs, ...this.TYPE[is], placeholder }
     },
     reset() {
@@ -160,11 +160,11 @@ export default {
      * 1、不使用封装的form组件中自带的查询、重置按钮，则需要使用回调的方式获取form表单的值
      * 2、使用封装的form组件中自带的查询、重置按钮，则需要在使用时通过父组件向封装的form子组件传一个函数submit来获取form表单的值
     */
-    submit(cb) {
+    submit(cb = () => {}) {
       // 第一种情况
       !this.footer && this.$refs.form.validate(valid => valid && cb(this.form))
       // 第二种情况
-      // this.footer && this.$refs.form.validate(valid => valid && this.$emit('submit', this.form))
+      this.footer && this.$refs.form.validate(valid => valid && this.$emit('submit', this.form))
       console.log(this.form)
     }
   }
