@@ -10,7 +10,17 @@
       :close-on-click-modal="false"
       :visible.sync="isOpenDetailed"
     >
-      <SupplierSelection v-if="isOpenDetailed" ref="isOpenDetailed" :row-data="materialData" @closeCreateDialog="closeCreateDialog" />
+      <SupplierSelection v-if="isOpenDetailed" ref="isOpenDetailed" :row-data="rowData" @closeCreateDialog="closeCreateDialog" />
+    </el-dialog>
+    <el-dialog
+      title="生成订单计划"
+      width="90%"
+      center
+      append-to-body
+      :close-on-click-modal="false"
+      :visible.sync="isCreateOrderPlan"
+    >
+      <CreateOrderPlan v-if="isCreateOrderPlan" ref="isCreateOrderPlan" :select-materials="selectMaterials" />
     </el-dialog>
   </div>
 </template>
@@ -18,10 +28,12 @@
 import NewTablePage from '@/components/MyComponents/NewTablePage'
 import { fetchDemandPlanPaidList } from '@/api/purchase'
 import SupplierSelection from './supplier-selection'
+import CreateOrderPlan from './create-order-plan'
 export default {
   components: {
     NewTablePage,
-    SupplierSelection
+    SupplierSelection,
+    CreateOrderPlan
   },
   inject: ['reload'], // 注入
   data() {
@@ -33,14 +45,6 @@ export default {
           type: '',
           plain: true,
           click: this.refresh
-        },
-        {
-          label: '',
-          icon: 'el-icon-check',
-          type: 'danger',
-          plain: true,
-          click: this.reject
-
         },
         {
           label: '查询',
@@ -55,7 +59,7 @@ export default {
           icon: 'el-icon-check',
           type: 'success',
           plain: true,
-          click: this.examinePass
+          click: this.createOrderPlan
 
         }
       ],
@@ -83,7 +87,7 @@ export default {
           { prop: 'name', name: '材料名称', attrs: { align: 'center' }},
           { prop: 'string1', name: '型号规格', attrs: { align: 'center' }},
           { prop: 'string2', name: '计量单位', attrs: { width: 150, align: 'center' }},
-          { prop: 'number2', name: '数量', type: 'InlineEdit', attrs: { align: 'center' }},
+          { prop: 'number2', name: '数量', attrs: { width: 200, align: 'center' }},
           { prop: 'whether', name: '本币单价', type: 'Enum', Enum: { name: 'whether' }, attrs: { width: 50, align: 'center' }},
           { prop: 'date', name: '本币税价合剂', type: 'Date', format: 'yyyy-MM-DD', attrs: { align: 'center' }},
           { prop: 'string3', name: '备注', type: 'Popover', attrs: { align: 'center' }},
@@ -106,7 +110,9 @@ export default {
 
       },
       rowData: null,
-      isOpenDetailed: false
+      isOpenDetailed: false,
+      isCreateOrderPlan: false,
+      selectMaterials: []
     }
   },
   created() {
@@ -122,10 +128,11 @@ export default {
       fetchDemandPlanPaidList(this.configPage.listQuery).then(response => {
         const items = response
         this.configTable.tableData = items.map(v => {
-          this.$set(v, 'edit', false) // https://vuejs.org/v2/guide/reactivity.html
-          v.originalTitle = v.number //  will be used when user click the cancel botton
+          this.$set(v, 'isnumber2', false) // https://vuejs.org/v2/guide/reactivity.html
+          v.originalVal = v.number2 //  will be used when user click the cancel botton
           return v
         })
+        // this.configTable.tableData = response
         console.log(this.configTable.tableData)
       })
     },
@@ -133,23 +140,23 @@ export default {
     refresh() {
       this.reload() // 局部刷新
     },
-    // 驳回
-    reject() {
-      console.log('reject')
-    },
-    // 审核通过
-    examinePass() {
-      console.log('examinePass')
+
+    // 生成订单计划
+    createOrderPlan() {
+      console.log('createOrderPlan')
+      console.log(this)
+      this.selectMaterials = this.$children[0].$children[2].getChecked()
+      this.isCreateOrderPlan = true
     },
     getAction() {
-      return { prop: 'action', name: '操作', type: 'Action', attrs: { width: 120, align: 'center' }, value: [
-        { id: '1', label: '查看详情', click: data => {
+      return { prop: 'action', name: '操作', type: 'Action', attrs: { width: 150, align: 'center' }, value: [
+        { label: '查看', attrs: { title: '查看详情' }, click: data => {
           console.log('查看')
           this.rowData = data
           this.isOpenDetailed = true
         } },
-        { id: '1', label: '编辑', attrs: { display: "(1 === 1) ? 'none' : 'inline-block'", align: 'center', color: '#0055ff' }, click: data => {
-          console.log('编辑')
+        { label: '编辑', attrs: { title: '编辑数量', type: 'primary' }, click: data => {
+          data.isnumber2 = true
         } }
       ] }
     },
@@ -159,6 +166,9 @@ export default {
       console.log(checked)
       this.rowData = checked
       this.isOpenDetailed = true
+    },
+    closeCreateDialog(val) {
+      this.isOpenMaterialDetailed = val
     }
   }
 }

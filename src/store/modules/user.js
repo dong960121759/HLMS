@@ -53,9 +53,6 @@ const actions = {
     })
   },
   keycloakLogin({ commit }) {
-    console.log('222222222222222')
-    console.log(keycloak)
-
     commit('SET_TOKEN', keycloak.token)
     setToken(keycloak.token)
   },

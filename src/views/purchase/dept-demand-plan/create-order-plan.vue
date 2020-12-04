@@ -2,7 +2,7 @@
 <template>
   <div>
     <NewTablePage :buttons="buttons" :config-form="configForm" :config-table="configTable" :config-page="configPage" />
-    <el-dialog
+    <!-- <el-dialog
       title="新增需求材料"
       width="80%"
       center
@@ -11,24 +11,26 @@
       :visible.sync="isOpenMaterialDetailed"
     >
       <CreateDemand v-if="isOpenMaterialDetailed" ref="isOpenMaterialDetailed" :row-data="materialData" @closeCreateDialog="closeCreateDialog" />
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 <script>
 import NewTablePage from '@/components/MyComponents/NewTablePage'
-import CreateDemand from './create-demand'
-import { fetchDeptDemandPlanList } from '@/api/dept'
+const statusLlist = [
+  { label: '供应商1', value: '0' },
+  { label: '供应商2', value: '1' },
+  { label: '供应商3', value: '2' }
+]
 
 export default {
   components: {
-    NewTablePage,
-    CreateDemand
+    NewTablePage
   },
   props: {
-    rowData: {
-      type: Object,
+    selectMaterials: {
+      type: Array,
       default: () => {
-        return null
+        return []
       }
     }
   },
@@ -43,11 +45,19 @@ export default {
           click: this.refresh
         },
         {
-          label: '新增',
+          label: '新增材料',
           icon: 'el-icon-plus',
           type: '',
           plain: true,
-          click: this.create
+          click: this.addMaterial
+
+        },
+        {
+          label: '确定订单计划',
+          icon: 'el-icon-check',
+          type: 'success',
+          plain: true,
+          click: this.fixOrderPlan
 
         },
         {
@@ -62,12 +72,7 @@ export default {
       configForm: {
         columns: [
           { prop: 'id', label: '订单计划号' },
-          { prop: 'string1', label: '请购部门', oninput: "value=value.replace(/[^\d]/g,'')" },
-          { prop: 'name', label: '请购人员' },
-          { prop: 'dateMonth', label: '计划年月', is: 'dateMonth' },
-          { prop: 'date', label: '日期', is: 'date' },
-          { prop: 'type', label: '采购类型' }
-
+          { prop: 'enum1', label: '供应商', is: 'select', list: statusLlist }
         ],
         data: {
           id: '',
@@ -87,7 +92,7 @@ export default {
           { prop: 'string1', name: '材料名称', attrs: { align: 'center' }},
           { prop: 'name', name: '型号规格', attrs: { align: 'center' }},
           { prop: 'dateMonth', name: '计价单位', attrs: { align: 'center' }},
-          { prop: 'enum1', name: '数量', attrs: { align: 'center' }},
+          { prop: 'number2', name: '数量', type: 'InlineEdit', attrs: { width: 200, align: 'center' }},
           { prop: 'number1', name: '本币单价', type: 'Enum', Enum: { name: 'whether' }, attrs: { align: 'center' }},
           { prop: 'date', name: '需求日期', type: 'Date', format: 'yyyy-MM-DD', attrs: { align: 'center' }},
           { prop: 'whether', name: '是否紧急', type: 'Enum', Enum: { name: 'whether' }, attrs: { align: 'center' }},
@@ -114,32 +119,29 @@ export default {
     }
   },
   created() {
-    if (this.rowData !== null) {
-      this.configForm.data = JSON.parse(JSON.stringify(this.rowData))
-      this.getList()
+    console.log(this.selectMaterials)
+    if (this.selectMaterials.length > 0) {
+      this.configTable.tableData = this.selectMaterials.map(v => {
+        this.$set(v, 'isnumber2', false) // https://vuejs.org/v2/guide/reactivity.html
+        v.originalVal = v.number2 //  will be used when user click the cancel botton
+        return v
+      })
+      // this.getList()
     }
   },
   methods: {
     getList() {
       console.log('getList')
-      if (this.configForm.data !== null) {
-        this.configPage.listQuery.query = this.configForm.data
-      }
-      console.log(this.configPage.listQuery.query)
-      fetchDeptDemandPlanList(this.configPage.listQuery).then(response => {
-        console.log(response)
-        this.configTable.tableData = response
-      })
     },
     // 刷新
     refresh() {
       // 使用:key改变重新加载dialog实现刷新
       this.$parent.$parent.refreshval += 1
     },
-    create() {
-      console.log('create')
+    addMaterial() {
+      console.log('addMaterial')
       this.materialData = null
-      this.isOpenMaterialDetailed = true
+      // this.isOpenMaterialDetailed = true
     },
     // 删除
     delete() {
@@ -168,9 +170,9 @@ export default {
         })
       }
     },
-    // 提交
-    submit() {
-      console.log('submit')
+    // 确定订单计划
+    fixOrderPlan() {
+      console.log('fixOrderPlan')
     },
     getAction() {
       return { prop: 'action', name: '操作', type: 'Action', attrs: { width: 150, align: 'center' }, value: [
@@ -178,6 +180,9 @@ export default {
           console.log('查看')
           this.isOpenMaterialDetailed = true
           this.materialData = data
+        } },
+        { label: '编辑', attrs: { title: '编辑数量', type: 'primary' }, click: data => {
+          data.isnumber2 = true
         } }
       ] }
     },

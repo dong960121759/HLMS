@@ -85,6 +85,10 @@ export default {
     background-color: #ff4949;
     border-color: #ff4949;
 }
+.btnTrue{
+  display: none;
+}
+
 // 解决纵向边框错位问题
 .el-table th.gutter{
     display: table-cell!important;
