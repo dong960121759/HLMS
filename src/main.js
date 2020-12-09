@@ -69,6 +69,5 @@ keycloak.init({ onLoad: initOptions.onLoad }).then((auth) => {
     })
   }
 })
-console.log(keycloak)
 export { keycloak }
 store.dispatch('user/keycloakLogin')

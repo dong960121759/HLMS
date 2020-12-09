@@ -165,7 +165,6 @@ export default {
       !this.footer && this.$refs.form.validate(valid => valid && cb(this.form))
       // 第二种情况
       this.footer && this.$refs.form.validate(valid => valid && this.$emit('submit', this.form))
-      console.log(this.form)
     }
   }
 }

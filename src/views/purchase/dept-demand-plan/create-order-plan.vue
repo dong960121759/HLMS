@@ -72,7 +72,7 @@ export default {
       configForm: {
         columns: [
           { prop: 'id', label: '订单计划号' },
-          { prop: 'enum1', label: '供应商', is: 'select', list: statusLlist }
+          { prop: 'enum1', label: '供应商', is: 'select', list: statusLlist, callback: r => this.statusChange(r) }
         ],
         data: {
           id: '',
@@ -92,7 +92,7 @@ export default {
           { prop: 'string1', name: '材料名称', attrs: { align: 'center' }},
           { prop: 'name', name: '型号规格', attrs: { align: 'center' }},
           { prop: 'dateMonth', name: '计价单位', attrs: { align: 'center' }},
-          { prop: 'number2', name: '数量', type: 'InlineEdit', attrs: { width: 200, align: 'center' }},
+          { prop: 'number3', name: '数量', type: 'InlineEdit', attrs: { width: 200, align: 'center' }},
           { prop: 'number1', name: '本币单价', type: 'Enum', Enum: { name: 'whether' }, attrs: { align: 'center' }},
           { prop: 'date', name: '需求日期', type: 'Date', format: 'yyyy-MM-DD', attrs: { align: 'center' }},
           { prop: 'whether', name: '是否紧急', type: 'Enum', Enum: { name: 'whether' }, attrs: { align: 'center' }},
@@ -119,15 +119,18 @@ export default {
     }
   },
   created() {
+    console.log('111111')
     console.log(this.selectMaterials)
     if (this.selectMaterials.length > 0) {
       this.configTable.tableData = this.selectMaterials.map(v => {
-        this.$set(v, 'isnumber2', false) // https://vuejs.org/v2/guide/reactivity.html
+        this.$set(v, 'number3', v.number2)
+        this.$set(v, 'isnumber3', false) // https://vuejs.org/v2/guide/reactivity.html
         v.originalVal = v.number2 //  will be used when user click the cancel botton
         return v
       })
       // this.getList()
     }
+    console.log(this.configTable.tableData)
   },
   methods: {
     getList() {
@@ -182,7 +185,7 @@ export default {
           this.materialData = data
         } },
         { label: '编辑', attrs: { title: '编辑数量', type: 'primary' }, click: data => {
-          data.isnumber2 = true
+          data.isnumber3 = true
         } }
       ] }
     },
@@ -195,6 +198,9 @@ export default {
     },
     closeCreateDialog(val) {
       this.isOpenMaterialDetailed = val
+    },
+    statusChange(r) {
+      console.log(r)
     }
   }
 }

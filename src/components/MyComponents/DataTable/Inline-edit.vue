@@ -52,8 +52,6 @@ export default {
     }
   },
   created() {
-    console.log('11111111111')
-    console.log(this.data)
   },
   methods: {
     cancelEdit(data) {
@@ -72,6 +70,7 @@ export default {
       }).then(() => {
         data[`${this.prop}`] = Number(this.inputVal)
         data['is' + `${this.prop}`] = false
+        data.originalVal = Number(this.inputVal)
         this.$message({
           message: '已修改',
           type: 'success'

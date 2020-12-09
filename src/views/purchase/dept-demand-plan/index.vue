@@ -13,6 +13,7 @@
       <SupplierSelection v-if="isOpenDetailed" ref="isOpenDetailed" :row-data="rowData" @closeCreateDialog="closeCreateDialog" />
     </el-dialog>
     <el-dialog
+      :key="refreshval"
       title="生成订单计划"
       width="90%"
       center
@@ -112,6 +113,7 @@ export default {
       rowData: null,
       isOpenDetailed: false,
       isCreateOrderPlan: false,
+      refreshval: 0,
       selectMaterials: []
     }
   },
@@ -126,14 +128,13 @@ export default {
       }
       console.log(this.configPage.listQuery.query)
       fetchDemandPlanPaidList(this.configPage.listQuery).then(response => {
-        const items = response
-        this.configTable.tableData = items.map(v => {
-          this.$set(v, 'isnumber2', false) // https://vuejs.org/v2/guide/reactivity.html
-          v.originalVal = v.number2 //  will be used when user click the cancel botton
-          return v
-        })
-        // this.configTable.tableData = response
-        console.log(this.configTable.tableData)
+        // const items = response
+        // this.configTable.tableData = items.map(v => {
+        //   this.$set(v, 'isnumber2', false) // https://vuejs.org/v2/guide/reactivity.html
+        //   v.originalVal = v.number2 //  will be used when user click the cancel botton
+        //   return v
+        // })
+        this.configTable.tableData = response
       })
     },
     // 刷新
@@ -154,10 +155,10 @@ export default {
           console.log('查看')
           this.rowData = data
           this.isOpenDetailed = true
-        } },
-        { label: '编辑', attrs: { title: '编辑数量', type: 'primary' }, click: data => {
-          data.isnumber2 = true
         } }
+        // { label: '编辑', attrs: { title: '编辑数量', type: 'primary' }, click: data => {
+        //   data.isnumber2 = true
+        // } }
       ] }
     },
     // 双击效果

@@ -19,8 +19,8 @@ const purchaseRouter = {
       meta: { title: 'deptDemandExamine' }
     },
     {
-      path: 'dept-demand-plan',
-      component: () => import('@/views/purchase/dept-demand-plan'),
+      path: 'dept-demand-plan1',
+      component: () => import('@/views/purchase/dept-demand-plan1'),
       name: 'DeptDemandPlan',
       meta: { title: 'deptDemandPlan' }
     },

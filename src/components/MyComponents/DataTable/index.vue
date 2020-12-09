@@ -70,7 +70,6 @@ export default {
     },
 
     handleCurrentChange(val) {
-      console.log(val)
       this.$emit(`handleCurrentChange`, val)
     }
   }
